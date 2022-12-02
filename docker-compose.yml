@@ -7,8 +7,10 @@ services:
     ports:
       - "3306:3306" # 접근 포트 설정 (컨테이너 외부:컨테이너 내부)  <- 컨테이너 내부는 무조건 3306
     environment: # -e 옵션
-      MYSQL_DATABASE: rualone
-      MYSQL_ROOT_PASSWORD: rualone! # MYSQL 패스워드 설정 옵션
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD} # MYSQL 패스워드 설정 옵션
     #volumes:
       #- /Users/Shared/data/mysql-test:/var/lib/mysql # -v 옵션 (다렉토리 마운트 설정)
 
@@ -27,9 +29,5 @@ services:
       ]
 
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/rualone?serverTimezone=Asia/Seoul
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: rualone!
-    restart: always
+      SPRING.DATASOURCE.URL: jdbc:mysql://mysql:3306/rualone?serverTimezone=Asia/Seoul
   #    volumes:   프론트랑 합친 후에 볼륨 설정 예정
-  # Access denied for user 'rualone'@'172.28.0.3
