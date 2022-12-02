@@ -16,7 +16,7 @@ services:
 
   backend:
     container_name: rualone-backend
-    image: kimich1218/rualone-backend:latest
+    image: ${SPRING_BOOT_IMAGE}
 
     ports:
       - "8080:8080"

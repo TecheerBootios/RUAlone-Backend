@@ -5,7 +5,11 @@ spring:
     username: ${MYSQL_USER}
     password: ${MYSQL_PASSWORD}
   jpa:
-    database-platform: org.hibernate.dialect.MySQL5Dialect
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
