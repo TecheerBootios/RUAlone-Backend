@@ -1,6 +1,6 @@
-package com.bootios.alone.domain.users.repository;
+package com.bootios.alone.domain.users.domain.repository;
 
-import com.bootios.alone.domain.users.entity.Users;
+import com.bootios.alone.domain.users.domain.entity.Users;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -1,4 +1,4 @@
-package com.bootios.alone.domain.users.entity;
+package com.bootios.alone.domain.users.domain.entity;
 
 import com.bootios.alone.global.common.BaseEntity;
 import javax.persistence.*;
