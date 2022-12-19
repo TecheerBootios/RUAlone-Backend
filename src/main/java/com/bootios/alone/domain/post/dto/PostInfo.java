@@ -1,12 +1,11 @@
 package com.bootios.alone.domain.post.dto;
 
 import com.bootios.alone.domain.post.domain.entity.FoodCategory;
+import java.time.LocalDateTime;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Builder
 @Getter

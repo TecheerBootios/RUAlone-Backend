@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PostController {
 
-    private final PostService postService;
+  private final PostService postService;
 
-    @PostMapping("/api/post")
-    public ResponseEntity<PostInfo> createPost(@RequestBody PostCreateRequest postCreateRequest){
-        PostInfo postInfo = postService.createPost(postCreateRequest);
-        return ResponseEntity.ok(postInfo);
-    }
+  @PostMapping("/api/post")
+  public ResponseEntity<PostInfo> createPost(@RequestBody PostCreateRequest postCreateRequest) {
+    PostInfo postInfo = postService.createPost(postCreateRequest);
+    return ResponseEntity.ok(postInfo);
+  }
 }

@@ -2,13 +2,12 @@ package com.bootios.alone.domain.post.domain.entity;
 
 import com.bootios.alone.domain.users.domain.entity.Users;
 import com.bootios.alone.global.common.BaseEntity;
+import java.time.LocalDateTime;
+import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Getter
 @Entity

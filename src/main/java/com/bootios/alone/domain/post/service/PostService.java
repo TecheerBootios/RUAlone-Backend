@@ -4,14 +4,11 @@ import com.bootios.alone.domain.post.domain.entity.Post;
 import com.bootios.alone.domain.post.domain.repository.PostRepository;
 import com.bootios.alone.domain.post.dto.PostCreateRequest;
 import com.bootios.alone.domain.post.dto.PostInfo;
-import com.bootios.alone.domain.post.exception.NotFondPostEntityException;
 import com.bootios.alone.domain.users.domain.entity.Users;
 import com.bootios.alone.domain.users.domain.exception.NotFoundUserEntityException;
 import com.bootios.alone.domain.users.domain.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
