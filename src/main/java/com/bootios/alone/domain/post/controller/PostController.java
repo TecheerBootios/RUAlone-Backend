@@ -9,15 +9,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @RestController
 public class PostController {
 
   private final PostService postService;
 
-  @PostMapping("/api/post")
-  public ResponseEntity<PostInfo> createPost(@RequestBody PostCreateRequest postCreateRequest) {
-    PostInfo postInfo = postService.createPost(postCreateRequest);
-    return ResponseEntity.ok(postInfo);
-  }
+    @PostMapping("/api/post")
+    public ResponseEntity<PostInfo> createPost(@Valid @RequestBody PostCreateRequest postCreateRequest){
+        PostInfo postInfo = postService.createPost(postCreateRequest);
+        return ResponseEntity.ok(postInfo);
+    }
 }
