@@ -1,4 +1,4 @@
-package com.bootios.alone.domain.users.domain.exception;
+package com.bootios.alone.domain.user.exception;
 
 public class NotFoundUserEntityException extends RuntimeException {
   public NotFoundUserEntityException() {
