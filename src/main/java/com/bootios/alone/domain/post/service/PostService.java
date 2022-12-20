@@ -4,9 +4,9 @@ import com.bootios.alone.domain.post.domain.entity.Post;
 import com.bootios.alone.domain.post.domain.repository.PostRepository;
 import com.bootios.alone.domain.post.dto.PostCreateRequest;
 import com.bootios.alone.domain.post.dto.PostInfo;
-import com.bootios.alone.domain.users.domain.entity.Users;
-import com.bootios.alone.domain.users.domain.exception.NotFoundUserEntityException;
-import com.bootios.alone.domain.users.domain.repository.UsersRepository;
+import com.bootios.alone.domain.user.User;
+import com.bootios.alone.domain.user.exception.NotFoundUserEntityException;
+import com.bootios.alone.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +14,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class PostService {
 
-  private final UsersRepository usersRepository;
+  private final UserRepository userRepository;
   private final PostRepository postRepository;
 
   public PostInfo createPost(PostCreateRequest postCreateRequest) {
-    Users foundCreator =
-        usersRepository
-            .findUsersById(postCreateRequest.getCreatorId())
+    User foundCreator =
+            userRepository
+            .findUserById(postCreateRequest.getCreatorId())
             .orElseThrow(NotFoundUserEntityException::new);
 
     Post newPost =

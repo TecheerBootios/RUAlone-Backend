@@ -1,6 +1,6 @@
 package com.bootios.alone.domain.post.domain.entity;
 
-import com.bootios.alone.domain.users.domain.entity.Users;
+import com.bootios.alone.domain.user.User;
 import com.bootios.alone.global.common.BaseEntity;
 import java.time.LocalDateTime;
 import javax.persistence.*;
@@ -16,12 +16,12 @@ import lombok.NoArgsConstructor;
 public class Post extends BaseEntity {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "creator_id", nullable = false)
-  private Users creator;
+  private User creator;
 
   @Column(name = "title", nullable = false)
   private String title;
@@ -38,7 +38,7 @@ public class Post extends BaseEntity {
 
   @Builder
   public Post(
-      Users creator,
+      User creator,
       String title,
       LocalDateTime startAt,
       Integer limitMember,
