@@ -19,7 +19,7 @@ public class PostService {
 
   public PostInfo createPost(PostCreateRequest postCreateRequest) {
     User foundCreator =
-            userRepository
+        userRepository
             .findUserById(postCreateRequest.getCreatorId())
             .orElseThrow(NotFoundUserEntityException::new);
 
@@ -41,7 +41,5 @@ public class PostService {
         .foodCategory(savedPost.getFoodCategory())
         .createdAt(savedPost.getCreatedAt())
         .build();
-
-
   }
 }

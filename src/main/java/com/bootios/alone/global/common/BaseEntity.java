@@ -25,5 +25,5 @@ public abstract class BaseEntity {
   private LocalDateTime updatedAt;
 
   @Column(name = "is_active", columnDefinition = "tinyint(1) default 1", nullable = false)
-  private Boolean isActive =  true;
+  private Boolean isActive = true;
 }
