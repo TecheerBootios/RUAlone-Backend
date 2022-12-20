@@ -8,13 +8,12 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ResultCode {
 
-  // 도메인 별로 나눠서 관리(ex: User 도메인)
-  // user
+// 도메인 별로 나눠서 관리(ex: User 도메인)
+// user
 
+// post
 
-  // post
-
- ;
+;
 
   private final String code;
   private final String message;
