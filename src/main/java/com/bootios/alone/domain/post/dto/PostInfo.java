@@ -18,5 +18,4 @@ public class PostInfo {
   private Integer limitMember;
   private FoodCategory foodCategory;
   private LocalDateTime createdAt;
-  private String phoneNumber;
 }

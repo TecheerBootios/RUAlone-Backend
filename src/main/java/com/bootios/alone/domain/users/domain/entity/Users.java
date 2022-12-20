@@ -16,16 +16,9 @@ public class Users extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "name", nullable = false)
-  private String name;
+  @Column(name = "kakao_name", nullable = false)
+  private String kakaoName;
 
-  @Column(name = "address", nullable = false)
-  private String address;
-
-  @Column(name = "phone_number", nullable = false)
-  private String phoneNumber;
-
-  @Column(name = "role", nullable = false) // 관리자 or 사용자 구분
-  @Enumerated(EnumType.STRING)
-  private UserRole role;
+  @Column(name = "kakao_email", nullable = false)
+  private String kakaoEmail;
 }

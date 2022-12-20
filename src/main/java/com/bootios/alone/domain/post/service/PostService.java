@@ -35,11 +35,13 @@ public class PostService {
     Post savedPost = postRepository.save(newPost);
     return PostInfo.builder()
         .title(savedPost.getTitle())
-        .creatorName(foundCreator.getName())
+        .creatorName(foundCreator.getKakaoName())
         .startAt(savedPost.getStartAt())
         .limitMember(savedPost.getLimitMember())
         .foodCategory(savedPost.getFoodCategory())
-        .phoneNumber(foundCreator.getPhoneNumber())
+        .createdAt(savedPost.getCreatedAt())
         .build();
+
+
   }
 }
