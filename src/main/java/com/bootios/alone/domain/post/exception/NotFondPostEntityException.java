@@ -1,7 +1,10 @@
 package com.bootios.alone.domain.post.exception;
 
-public class NotFondPostEntityException extends RuntimeException {
+import com.bootios.alone.global.error.ErrorCode;
+import com.bootios.alone.global.error.exception.BusinessException;
+
+public class NotFondPostEntityException extends BusinessException {
   public NotFondPostEntityException() {
-    super("Post 를 찾을 수 없음");
+    super(ErrorCode.NOT_FOUND_POST_ENTITY);
   }
 }
