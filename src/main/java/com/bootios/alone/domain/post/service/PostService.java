@@ -4,6 +4,9 @@ import com.bootios.alone.domain.post.domain.entity.Post;
 import com.bootios.alone.domain.post.domain.repository.PostRepository;
 import com.bootios.alone.domain.post.dto.PostCreateRequest;
 import com.bootios.alone.domain.post.dto.PostInfo;
+import com.bootios.alone.domain.post.dto.PostUpdateRequest;
+import com.bootios.alone.domain.post.exception.NotFoundPostEntityException;
+import com.bootios.alone.domain.post.exception.OnlyCreatorUpdatePostException;
 import com.bootios.alone.domain.user.User;
 import com.bootios.alone.domain.user.exception.NotFoundUserEntityException;
 import com.bootios.alone.domain.user.repository.UserRepository;
@@ -33,6 +36,33 @@ public class PostService {
             .build();
 
     Post savedPost = postRepository.save(newPost);
+    return PostInfo.builder()
+        .title(savedPost.getTitle())
+        .creatorName(foundCreator.getKakaoName())
+        .startAt(savedPost.getStartAt())
+        .limitMember(savedPost.getLimitMember())
+        .foodCategory(savedPost.getFoodCategory())
+        .createdAt(savedPost.getCreatedAt())
+        .build();
+  }
+
+  public PostInfo updatePost(PostUpdateRequest postUpdateRequest) {
+    User foundCreator =
+        userRepository
+            .findUserById(postUpdateRequest.getCreatorId())
+            .orElseThrow(NotFoundUserEntityException::new);
+
+    Post foundPost =
+        postRepository
+            .findPostById(postUpdateRequest.getPostId())
+            .orElseThrow(NotFoundPostEntityException::new);
+    //    NotFoundPostEntityException::new
+    // == throw new NotFoundPostEntityException();
+
+
+    foundPost.update(postUpdateRequest);
+
+    Post savedPost = postRepository.save(foundPost);
     return PostInfo.builder()
         .title(savedPost.getTitle())
         .creatorName(foundCreator.getKakaoName())

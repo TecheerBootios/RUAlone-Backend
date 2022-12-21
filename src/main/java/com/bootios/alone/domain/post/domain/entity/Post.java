@@ -1,5 +1,6 @@
 package com.bootios.alone.domain.post.domain.entity;
 
+import com.bootios.alone.domain.post.dto.PostUpdateRequest;
 import com.bootios.alone.domain.user.User;
 import com.bootios.alone.global.common.BaseEntity;
 import java.time.LocalDateTime;
@@ -48,5 +49,12 @@ public class Post extends BaseEntity {
     this.startAt = startAt;
     this.limitMember = limitMember;
     this.foodCategory = foodCategory;
+  }
+
+  public void update(PostUpdateRequest postUpdateRequest) {
+    this.title = postUpdateRequest.getTitle();
+    this.startAt = postUpdateRequest.getStartAt();
+    this.limitMember = postUpdateRequest.getLimitMember();
+    this.foodCategory = postUpdateRequest.getFoodCategory();
   }
 }
