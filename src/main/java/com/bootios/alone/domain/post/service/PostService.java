@@ -59,6 +59,9 @@ public class PostService {
     //    NotFoundPostEntityException::new
     // == throw new NotFoundPostEntityException();
 
+    if (!foundPost.getCreator().equals(foundCreator)) {
+      throw new OnlyCreatorUpdatePostException();
+    }
 
     foundPost.update(postUpdateRequest);
 
