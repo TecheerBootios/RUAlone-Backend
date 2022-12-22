@@ -33,7 +33,7 @@ public class Post extends BaseEntity {
   @Column(name = "limit_member", nullable = false)
   private Integer limitMember;
 
-  @Column(name = "food_category", nullable = false) // 관리자 or 사용자 구분
+  @Column(name = "food_category", nullable = false)
   @Enumerated(EnumType.STRING)
   private FoodCategory foodCategory;
 
