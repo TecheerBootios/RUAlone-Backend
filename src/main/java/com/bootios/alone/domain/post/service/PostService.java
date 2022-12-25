@@ -68,8 +68,7 @@ public class PostService {
     return mapPostEntityToPostInfo(foundPost);
   }
 
-  private Post mapCreateRequestToEntity(
-      PostCreateRequest postCreateRequest, User foundCreator) {
+  private Post mapCreateRequestToEntity(PostCreateRequest postCreateRequest, User foundCreator) {
     return Post.builder()
         .title(postCreateRequest.getTitle())
         .creator(foundCreator)
