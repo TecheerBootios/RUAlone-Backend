@@ -25,28 +25,10 @@ public class PostService {
     User foundCreator =
         userRepository.findUserById(creatorId).orElseThrow(NotFoundUserEntityException::new);
 
-    Post newPost =
-        Post.builder()
-            .title(postCreateRequest.getTitle())
-            .creator(foundCreator)
-            .startAt(postCreateRequest.getStartAt())
-            .limitMember(postCreateRequest.getLimitMember())
-            .foodCategory(postCreateRequest.getFoodCategory())
-            .build();
+    Post newPost = mapCreateRequestToEntity(postCreateRequest, foundCreator);
 
     Post savedPost = postRepository.save(newPost);
     return mapPostEntityToPostInfo(savedPost);
-  }
-
-  private PostInfo mapPostEntityToPostInfo(Post savedPost) {
-    return PostInfo.builder()
-        .title(savedPost.getTitle())
-        .creatorName(savedPost.getCreator().getKakaoName())
-        .startAt(savedPost.getStartAt())
-        .limitMember(savedPost.getLimitMember())
-        .foodCategory(savedPost.getFoodCategory())
-        .createdAt(savedPost.getCreatedAt())
-        .build();
   }
 
   public PostInfo updatePost(PostUpdateRequest postUpdateRequest) {
@@ -69,18 +51,11 @@ public class PostService {
     foundPost.update(postUpdateRequest);
 
     Post savedPost = postRepository.save(foundPost);
-    return PostInfo.builder()
-        .title(savedPost.getTitle())
-        .creatorName(foundCreator.getKakaoName())
-        .startAt(savedPost.getStartAt())
-        .limitMember(savedPost.getLimitMember())
-        .foodCategory(savedPost.getFoodCategory())
-        .createdAt(savedPost.getCreatedAt())
-        .build();
+    return mapPostEntityToPostInfo(savedPost);
   }
 
   //  @Transactional
-  public void deletePost(Long id) { // 삭제하고 싶은 post id
+  public void deletePost(Long id) {
 
     Post foundPost = postRepository.findPostById(id).orElseThrow(NotFoundPostEntityException::new);
     foundPost.deletePost();
@@ -90,14 +65,28 @@ public class PostService {
   public PostInfo getPostDetail(Long id) {
 
     Post foundPost = postRepository.findPostById(id).orElseThrow(NotFoundPostEntityException::new);
+    return mapPostEntityToPostInfo(foundPost);
+  }
 
+  private Post mapCreateRequestToEntity(
+      PostCreateRequest postCreateRequest, User foundCreator) {
+    return Post.builder()
+        .title(postCreateRequest.getTitle())
+        .creator(foundCreator)
+        .startAt(postCreateRequest.getStartAt())
+        .limitMember(postCreateRequest.getLimitMember())
+        .foodCategory(postCreateRequest.getFoodCategory())
+        .build();
+  }
+
+  private PostInfo mapPostEntityToPostInfo(Post post) {
     return PostInfo.builder()
-        .title(foundPost.getTitle())
-        .creatorName(foundPost.getCreator().getKakaoName())
-        .startAt(foundPost.getStartAt())
-        .limitMember(foundPost.getLimitMember())
-        .foodCategory(foundPost.getFoodCategory())
-        .createdAt(foundPost.getCreatedAt())
+        .title(post.getTitle())
+        .creatorName(post.getCreator().getKakaoName())
+        .startAt(post.getStartAt())
+        .limitMember(post.getLimitMember())
+        .foodCategory(post.getFoodCategory())
+        .createdAt(post.getCreatedAt())
         .build();
   }
 }
