@@ -3,12 +3,13 @@ package com.bootios.alone.domain.post.domain.entity;
 import com.bootios.alone.domain.post.dto.PostUpdateRequest;
 import com.bootios.alone.domain.user.User;
 import com.bootios.alone.global.common.BaseEntity;
-import java.time.LocalDateTime;
-import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Entity
@@ -56,5 +57,9 @@ public class Post extends BaseEntity {
     this.startAt = postUpdateRequest.getStartAt();
     this.limitMember = postUpdateRequest.getLimitMember();
     this.foodCategory = postUpdateRequest.getFoodCategory();
+  }
+
+  public void deletePost() {
+    this.delete();
   }
 }

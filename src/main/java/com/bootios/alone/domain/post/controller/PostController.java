@@ -4,16 +4,13 @@ import com.bootios.alone.domain.post.dto.PostCreateRequest;
 import com.bootios.alone.domain.post.dto.PostInfo;
 import com.bootios.alone.domain.post.dto.PostUpdateRequest;
 import com.bootios.alone.domain.post.service.PostService;
-import javax.validation.Valid;
-
 import com.bootios.alone.global.result.ResultCode;
 import com.bootios.alone.global.result.ResultResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RestController
@@ -30,8 +27,20 @@ public class PostController {
 
   @PutMapping("/api/post")
   public ResponseEntity<ResultResponse> updatePost(
-          @Valid @RequestBody PostUpdateRequest postUpdateRequest) {
+      @Valid @RequestBody PostUpdateRequest postUpdateRequest) {
     PostInfo postInfo = postService.updatePost(postUpdateRequest);
     return ResponseEntity.ok(ResultResponse.of(ResultCode.UPDATE_POST_SUCCESS, postInfo));
+  }
+
+  @DeleteMapping("/api/post/{id}")
+  public ResponseEntity<ResultResponse> deletePost(@PathVariable Long id) {
+    postService.deletePost(id);
+    return ResponseEntity.ok(ResultResponse.of(ResultCode.DELETE_POST_SUCCESS));
+  }
+
+  @GetMapping("/api/post/{id}")
+  public ResponseEntity<ResultResponse> getPost(@PathVariable Long id) {
+    PostInfo postDetail = postService.getPostDetail(id);
+    return ResponseEntity.ok(ResultResponse.of(ResultCode.GET_ONE_POST_SUCCESS, postDetail));
   }
 }

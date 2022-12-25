@@ -21,10 +21,9 @@ public class PostService {
   private final PostRepository postRepository;
 
   public PostInfo createPost(PostCreateRequest postCreateRequest) {
+    Long creatorId = postCreateRequest.getCreatorId();
     User foundCreator =
-        userRepository
-            .findUserById(postCreateRequest.getCreatorId())
-            .orElseThrow(NotFoundUserEntityException::new);
+        userRepository.findUserById(creatorId).orElseThrow(NotFoundUserEntityException::new);
 
     Post newPost =
         Post.builder()
@@ -36,9 +35,13 @@ public class PostService {
             .build();
 
     Post savedPost = postRepository.save(newPost);
+    return mapPostEntityToPostInfo(savedPost);
+  }
+
+  private PostInfo mapPostEntityToPostInfo(Post savedPost) {
     return PostInfo.builder()
         .title(savedPost.getTitle())
-        .creatorName(foundCreator.getKakaoName())
+        .creatorName(savedPost.getCreator().getKakaoName())
         .startAt(savedPost.getStartAt())
         .limitMember(savedPost.getLimitMember())
         .foodCategory(savedPost.getFoodCategory())
@@ -73,6 +76,28 @@ public class PostService {
         .limitMember(savedPost.getLimitMember())
         .foodCategory(savedPost.getFoodCategory())
         .createdAt(savedPost.getCreatedAt())
+        .build();
+  }
+
+  //  @Transactional
+  public void deletePost(Long id) { // 삭제하고 싶은 post id
+
+    Post foundPost = postRepository.findPostById(id).orElseThrow(NotFoundPostEntityException::new);
+    foundPost.deletePost();
+    postRepository.save(foundPost);
+  }
+
+  public PostInfo getPostDetail(Long id) {
+
+    Post foundPost = postRepository.findPostById(id).orElseThrow(NotFoundPostEntityException::new);
+
+    return PostInfo.builder()
+        .title(foundPost.getTitle())
+        .creatorName(foundPost.getCreator().getKakaoName())
+        .startAt(foundPost.getStartAt())
+        .limitMember(foundPost.getLimitMember())
+        .foodCategory(foundPost.getFoodCategory())
+        .createdAt(foundPost.getCreatedAt())
         .build();
   }
 }
