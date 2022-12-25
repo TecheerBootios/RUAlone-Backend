@@ -1,7 +1,10 @@
 package com.bootios.alone.domain.user.exception;
 
-public class NotFoundUserEntityException extends RuntimeException {
+import com.bootios.alone.global.error.ErrorCode;
+import com.bootios.alone.global.error.exception.BusinessException;
+
+public class NotFoundUserEntityException extends BusinessException {
   public NotFoundUserEntityException() {
-    super("User 를 찾을 수 없음");
+    super(ErrorCode.NOT_FOUND_USER_ENTITY);
   }
 }

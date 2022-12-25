@@ -1,5 +1,6 @@
 package com.bootios.alone.domain.post.domain.entity;
 
+import com.bootios.alone.domain.post.dto.PostUpdateRequest;
 import com.bootios.alone.domain.user.User;
 import com.bootios.alone.global.common.BaseEntity;
 import java.time.LocalDateTime;
@@ -32,7 +33,7 @@ public class Post extends BaseEntity {
   @Column(name = "limit_member", nullable = false)
   private Integer limitMember;
 
-  @Column(name = "food_category", nullable = false) // 관리자 or 사용자 구분
+  @Column(name = "food_category", nullable = false)
   @Enumerated(EnumType.STRING)
   private FoodCategory foodCategory;
 
@@ -48,5 +49,16 @@ public class Post extends BaseEntity {
     this.startAt = startAt;
     this.limitMember = limitMember;
     this.foodCategory = foodCategory;
+  }
+
+  public void update(PostUpdateRequest postUpdateRequest) {
+    this.title = postUpdateRequest.getTitle();
+    this.startAt = postUpdateRequest.getStartAt();
+    this.limitMember = postUpdateRequest.getLimitMember();
+    this.foodCategory = postUpdateRequest.getFoodCategory();
+  }
+
+  public void deletePost() {
+    this.delete();
   }
 }
