@@ -1,5 +1,6 @@
 package com.bootios.alone.domain.post.domain.entity;
 
+import com.bootios.alone.domain.location.domain.entity.Location;
 import com.bootios.alone.domain.post.dto.PostUpdateRequest;
 import com.bootios.alone.domain.user.User;
 import com.bootios.alone.global.common.BaseEntity;
@@ -24,6 +25,10 @@ public class Post extends BaseEntity {
   @JoinColumn(name = "creator_id", nullable = false)
   private User creator;
 
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "location_id", nullable = false)
+  private Location location;
+
   @Column(name = "title", nullable = false)
   private String title;
 
@@ -40,11 +45,13 @@ public class Post extends BaseEntity {
   @Builder
   public Post(
       User creator,
+      Location location,
       String title,
       LocalDateTime startAt,
       Integer limitMember,
       FoodCategory foodCategory) {
     this.creator = creator;
+    this.location = location;
     this.title = title;
     this.startAt = startAt;
     this.limitMember = limitMember;
