@@ -71,6 +71,7 @@ public class PostService {
   private Post mapCreateRequestToEntity(PostCreateRequest postCreateRequest, User foundCreator) {
     return Post.builder()
         .title(postCreateRequest.getTitle())
+        .chatUrl(postCreateRequest.getChatUrl())
         .creator(foundCreator)
         .startAt(postCreateRequest.getStartAt())
         .limitMember(postCreateRequest.getLimitMember())
@@ -81,6 +82,7 @@ public class PostService {
   private PostInfo mapPostEntityToPostInfo(Post post) {
     return PostInfo.builder()
         .title(post.getTitle())
+        .chatUrl(post.getChatUrl())
         .creatorName(post.getCreator().getKakaoName())
         .startAt(post.getStartAt())
         .limitMember(post.getLimitMember())

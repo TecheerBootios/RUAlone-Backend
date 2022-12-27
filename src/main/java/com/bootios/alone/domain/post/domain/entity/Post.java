@@ -4,12 +4,13 @@ import com.bootios.alone.domain.location.domain.entity.Location;
 import com.bootios.alone.domain.post.dto.PostUpdateRequest;
 import com.bootios.alone.domain.user.User;
 import com.bootios.alone.global.common.BaseEntity;
-import java.time.LocalDateTime;
-import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Entity
@@ -32,6 +33,9 @@ public class Post extends BaseEntity {
   @Column(name = "title", nullable = false)
   private String title;
 
+  @Column(name = "chat_url", nullable = false)
+  private String chatUrl;
+
   @Column(name = "start_at", nullable = false)
   private LocalDateTime startAt;
 
@@ -47,12 +51,14 @@ public class Post extends BaseEntity {
       User creator,
       Location location,
       String title,
+      String chatUrl,
       LocalDateTime startAt,
       Integer limitMember,
       FoodCategory foodCategory) {
     this.creator = creator;
     this.location = location;
     this.title = title;
+    this.chatUrl = chatUrl;
     this.startAt = startAt;
     this.limitMember = limitMember;
     this.foodCategory = foodCategory;
