@@ -2,8 +2,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/rualone?serverTimezone=Asia/Seoul
-    username: rualone
-    password: rualone!
+    username: root
+    password: 12345678
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
@@ -13,3 +13,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+kakao:
+  authUrl: https://kauth.kakao.com/oauth/token
+  userApiUrl: https://kapi.kakao.com/v2/user/me
+  restapiKey: 
+  redirectUrl: http://localhost:8080/api/v1/kakao/callback
