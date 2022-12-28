@@ -6,6 +6,5 @@ import lombok.ToString;
 @Getter
 @ToString
 public class Profile {
-    private String nickname;
+  private String nickname;
 }
-
