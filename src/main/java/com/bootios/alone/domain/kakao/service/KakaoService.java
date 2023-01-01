@@ -4,16 +4,11 @@ import com.bootios.alone.domain.kakao.client.KakaoClient;
 import com.bootios.alone.domain.kakao.dto.KakaoAccount;
 import com.bootios.alone.domain.kakao.dto.KakaoInfo;
 import com.bootios.alone.domain.kakao.dto.KakaoToken;
-import com.bootios.alone.domain.user.dto.AuthorityDto;
 import com.bootios.alone.domain.user.dto.UserDto;
 import com.bootios.alone.domain.user.entity.Authority;
-import com.bootios.alone.domain.user.entity.User;
 import com.bootios.alone.domain.user.repository.UserRepository;
-import java.net.URI;
-import java.util.Collections;
-import java.util.Set;
-
 import com.bootios.alone.domain.user.service.UserService;
+import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -58,16 +53,14 @@ public class KakaoService {
       if (!userRepository.existsByUsername(kakaoInfo.getEmail())) {
         log.info("사용자 저장");
 
-        Authority authority = Authority.builder()
-                .authorityName("ROLE_USER")
-                .build();
+        Authority authority = Authority.builder().authorityName("ROLE_USER").build();
 
-        userService.signup(UserDto.builder()
+        userService.signup(
+            UserDto.builder()
                 .username(kakaoInfo.getEmail())
                 .password("$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi") // admin
                 .nickname(kakaoInfo.getProfile().getNickname())
-                .build()
-        );
+                .build());
 
         return client.getInfo(
             new URI(kakaoUserApiUrl), token.getTokenType() + " " + token.getAccessToken());

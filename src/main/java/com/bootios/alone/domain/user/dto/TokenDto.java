@@ -9,5 +9,5 @@ import lombok.*;
 @NoArgsConstructor
 public class TokenDto {
 
-    private String token;
+  private String token;
 }

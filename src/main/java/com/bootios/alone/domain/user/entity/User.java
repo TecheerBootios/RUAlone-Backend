@@ -1,13 +1,11 @@
 package com.bootios.alone.domain.user.entity;
 
 import com.bootios.alone.global.common.BaseEntity;
-import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Set;
+import javax.persistence.*;
 import lombok.*;
 import lombok.NoArgsConstructor;
-
-import java.util.Set;
 
 @Getter
 @NoArgsConstructor // 인자 없는 생성자 생성
@@ -37,9 +35,11 @@ public class User extends BaseEntity {
 
   @ManyToMany
   @JoinTable(
-          name = "user_authority",
-          joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")},
-          inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
+      name = "user_authority",
+      joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")},
+      inverseJoinColumns = {
+        @JoinColumn(name = "authority_name", referencedColumnName = "authority_name")
+      })
   private Set<Authority> authorities;
 
   @Builder
