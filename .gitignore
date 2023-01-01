@@ -1,5 +1,7 @@
 .env
 gradle.properties
+application-jwt.yml
+application-kakao.yml
 
 
 ########################################################################
