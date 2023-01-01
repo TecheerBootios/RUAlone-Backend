@@ -28,4 +28,3 @@ public class KakaoController {
     return kakaoService.getInfo(code).getKakaoAccount();
   }
 }
-// https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=8fd4638ed7ddf189db24d5089c1fdb33&redirect_uri=http://localhost:8080/api/v1/kakao/callback

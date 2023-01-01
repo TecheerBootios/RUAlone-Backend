@@ -4,7 +4,7 @@ import com.bootios.alone.domain.post.domain.entity.Post;
 import com.bootios.alone.domain.post.domain.repository.PostRepository;
 import com.bootios.alone.domain.post.dto.PostCreateRequest;
 import com.bootios.alone.domain.post.dto.PostInfo;
-import com.bootios.alone.domain.user.User;
+import com.bootios.alone.domain.user.entity.User;
 import com.bootios.alone.domain.user.exception.NotFoundUserEntityException;
 import com.bootios.alone.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +35,7 @@ public class PostService {
     Post savedPost = postRepository.save(newPost);
     return PostInfo.builder()
         .title(savedPost.getTitle())
-        .creatorName(foundCreator.getKakaoName())
+        .creatorName(foundCreator.getNickname())
         .startAt(savedPost.getStartAt())
         .limitMember(savedPost.getLimitMember())
         .foodCategory(savedPost.getFoodCategory())

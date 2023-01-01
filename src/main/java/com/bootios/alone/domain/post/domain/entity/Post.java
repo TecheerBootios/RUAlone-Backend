@@ -1,6 +1,6 @@
 package com.bootios.alone.domain.post.domain.entity;
 
-import com.bootios.alone.domain.user.User;
+import com.bootios.alone.domain.user.entity.User;
 import com.bootios.alone.global.common.BaseEntity;
 import java.time.LocalDateTime;
 import javax.persistence.*;
