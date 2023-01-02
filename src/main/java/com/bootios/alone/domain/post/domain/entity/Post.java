@@ -2,7 +2,6 @@ package com.bootios.alone.domain.post.domain.entity;
 
 import com.bootios.alone.domain.location.domain.entity.Location;
 import com.bootios.alone.domain.post.dto.PostUpdateRequest;
-
 import com.bootios.alone.domain.user.entity.User;
 import com.bootios.alone.global.common.BaseEntity;
 import java.time.LocalDateTime;

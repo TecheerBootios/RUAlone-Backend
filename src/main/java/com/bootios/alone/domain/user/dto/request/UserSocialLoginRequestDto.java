@@ -8,5 +8,5 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserSocialLoginRequestDto {
-    private String accessToken;
+  private String accessToken;
 }

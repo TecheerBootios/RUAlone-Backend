@@ -1,7 +1,5 @@
 package com.bootios.alone.domain.social.kakao.controller;
 
-
-
 import com.bootios.alone.domain.social.kakao.service.KakaoService;
 import com.bootios.alone.global.advice.exception.CCommunicationException;
 import com.bootios.alone.global.response.model.CommonResult;
@@ -28,61 +26,64 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/oauth/kakao")
 public class KOAuthController {
 
-    private final RestTemplate restTemplate;
-    private final Environment env;
-    private final KakaoService kakaoService;
-    private final ResponseService responseService;
+  private final RestTemplate restTemplate;
+  private final Environment env;
+  private final KakaoService kakaoService;
+  private final ResponseService responseService;
 
-    @Value("${spring.url.base}")
-    private String baseUrl;
+  @Value("${spring.url.base}")
+  private String baseUrl;
 
-    @Value("${social.kakao.client-id}")
-    private String kakaoClientId;
+  @Value("${social.kakao.client-id}")
+  private String kakaoClientId;
 
-    @Value("${social.kakao.redirect}")
-    private String kakaoRedirectUri;
+  @Value("${social.kakao.redirect}")
+  private String kakaoRedirectUri;
 
-    @GetMapping("/login")
-    public ModelAndView socialLogin(ModelAndView mav) {
+  @GetMapping("/login")
+  public ModelAndView socialLogin(ModelAndView mav) {
 
-        StringBuilder loginUri = new StringBuilder()
-                .append(env.getProperty("social.kakao.url.login"))
-                .append("?response_type=code")
-                .append("&client_id=").append(kakaoClientId)
-                .append("&redirect_uri=").append(baseUrl).append(kakaoRedirectUri);
-        mav.addObject("loginUrl", loginUri);
-        mav.setViewName("social/login");
-        return mav;
+    StringBuilder loginUri =
+        new StringBuilder()
+            .append(env.getProperty("social.kakao.url.login"))
+            .append("?response_type=code")
+            .append("&client_id=")
+            .append(kakaoClientId)
+            .append("&redirect_uri=")
+            .append(baseUrl)
+            .append(kakaoRedirectUri);
+    mav.addObject("loginUrl", loginUri);
+    mav.setViewName("social/login");
+    return mav;
+  }
+
+  @GetMapping(value = "/redirect")
+  public ModelAndView redirectKakao(
+      ModelAndView mav,
+      @ApiParam(value = "Authorization Code", required = true) @RequestParam String code) {
+
+    mav.addObject("authInfo", kakaoService.getKakaoTokenInfo(code));
+    mav.setViewName("social/redirectKakao");
+    return mav;
+  }
+
+  @GetMapping(value = "/unlink")
+  public CommonResult unlinkKakao(@RequestParam String accessToken) {
+
+    String unlinkUri = env.getProperty("social.kakao.url.unlink");
+    if (unlinkUri == null) throw new CCommunicationException();
+
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+    headers.set("Authorization", "Bearer " + accessToken);
+
+    HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(null, headers);
+
+    ResponseEntity<String> response = restTemplate.postForEntity(unlinkUri, request, String.class);
+    if (response.getStatusCode() == HttpStatus.OK) {
+      log.info("unlink " + response.getBody());
+      return responseService.getSuccessResult();
     }
-
-    @GetMapping(value = "/redirect")
-    public ModelAndView redirectKakao(
-            ModelAndView mav,
-            @ApiParam(value = "Authorization Code", required = true)
-            @RequestParam String code) {
-
-        mav.addObject("authInfo", kakaoService.getKakaoTokenInfo(code));
-        mav.setViewName("social/redirectKakao");
-        return mav;
-    }
-
-    @GetMapping(value = "/unlink")
-    public CommonResult unlinkKakao(@RequestParam String accessToken) {
-
-        String unlinkUri = env.getProperty("social.kakao.url.unlink");
-        if (unlinkUri == null) throw new CCommunicationException();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        headers.set("Authorization", "Bearer " + accessToken);
-
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(null, headers);
-
-        ResponseEntity<String> response = restTemplate.postForEntity(unlinkUri, request, String.class);
-        if (response.getStatusCode() == HttpStatus.OK) {
-            log.info("unlink " + response.getBody());
-            return responseService.getSuccessResult();
-        }
-        throw new CCommunicationException();
-    }
+    throw new CCommunicationException();
+  }
 }

@@ -2,6 +2,11 @@ package com.bootios.alone.domain.user.entity;
 
 import com.bootios.alone.global.common.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,12 +14,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Builder
 @Entity
@@ -54,9 +53,7 @@ public class User extends BaseEntity implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return this.roles
-            .stream().map(SimpleGrantedAuthority::new)
-            .collect(Collectors.toList());
+    return this.roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
   }
 
   @Override

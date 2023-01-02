@@ -12,13 +12,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @NoArgsConstructor
 @Builder
 public class UserLoginRequestDto {
-    private String email;
-    private String password;
+  private String email;
+  private String password;
 
-    public User toUser(PasswordEncoder passwordEncoder) {
-        return User.builder()
-                .email(email)
-                .password(passwordEncoder.encode(password))
-                .build();
-    }
+  public User toUser(PasswordEncoder passwordEncoder) {
+    return User.builder().email(email).password(passwordEncoder.encode(password)).build();
+  }
 }

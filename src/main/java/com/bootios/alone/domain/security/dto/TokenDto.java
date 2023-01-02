@@ -8,8 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TokenDto {
-    private String grantType;
-    private String accessToken;
-    private String refreshToken;
-    private Long accessTokenExpireDate;
+  private String grantType;
+  private String accessToken;
+  private String refreshToken;
+  private Long accessTokenExpireDate;
 }
