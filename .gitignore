@@ -5,9 +5,9 @@
 gradle.properties
 
 ### application-xxx.yml ###
-application-oauth.yml
-application-private.yml
-application-local.yml
+/src/main/resources/application-oauth.yml
+/src/main/resources/application-private.yml
+/src/main/resources/application-local.yml
 
 ########################################################################
 HELP.md
