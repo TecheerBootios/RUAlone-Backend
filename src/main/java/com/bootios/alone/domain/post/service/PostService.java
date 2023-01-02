@@ -7,7 +7,8 @@ import com.bootios.alone.domain.post.dto.PostInfo;
 import com.bootios.alone.domain.post.dto.PostUpdateRequest;
 import com.bootios.alone.domain.post.exception.NotFoundPostEntityException;
 import com.bootios.alone.domain.post.exception.OnlyCreatorUpdatePostException;
-import com.bootios.alone.domain.user.User;
+
+import com.bootios.alone.domain.user.entity.User;
 import com.bootios.alone.domain.user.exception.NotFoundUserEntityException;
 import com.bootios.alone.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -81,7 +82,7 @@ public class PostService {
   private PostInfo mapPostEntityToPostInfo(Post post) {
     return PostInfo.builder()
         .title(post.getTitle())
-        .creatorName(post.getCreator().getKakaoName())
+        .creatorName(post.getCreator().getNickName())
         .startAt(post.getStartAt())
         .limitMember(post.getLimitMember())
         .foodCategory(post.getFoodCategory())
