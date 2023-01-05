@@ -47,9 +47,17 @@ public class PostController {
 
   @GetMapping("/api/post/list")
   public ResponseEntity<ResultResponse> getPostListByPagination(
-      @RequestParam(defaultValue = "0") int page, @RequestParam("10") int size) {
+      @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
     PostInfoList postDetailList = postService.getPostListByPagination(page, size);
     return ResponseEntity.ok(
         ResultResponse.of(ResultCode.GET_POST_PAGINATION_SUCCESS, postDetailList));
+  }
+
+  @GetMapping("/api/post/search")
+  public ResponseEntity<ResultResponse> getPostListByPagination(
+          @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "") String keyword) {
+    PostInfoList postDetailList = postService.searchPostListWithTitleByPagination(page, size, keyword);
+    return ResponseEntity.ok(
+            ResultResponse.of(ResultCode.SEARCH_POST_BY_TITLE_PAGINATION_SUCCESS, postDetailList));
   }
 }

@@ -104,8 +104,14 @@ public class PostService {
   public PostInfoList getPostListByPagination(int page, int size) {
     PageRequest pageRequest = PageRequest.of(page, size);
     Page<Post> postListByPagination = postRepository.findPostWithPagination(pageRequest);
-
     return mapPostEntityToPostInfoList(postListByPagination);
 
+  }
+
+  public PostInfoList searchPostListWithTitleByPagination(int page, int size, String keyword) {
+    PageRequest pageRequest = PageRequest.of(page, size);
+    Page<Post> postListByPagination = postRepository.findContainingTitlePostWithPagination(pageRequest,keyword);
+
+    return mapPostEntityToPostInfoList(postListByPagination);
   }
 }
