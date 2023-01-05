@@ -2,11 +2,12 @@ package com.bootios.alone.domain.location.domain.entity;
 
 import com.bootios.alone.domain.post.domain.entity.Post;
 import com.bootios.alone.global.common.BaseEntity;
-import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 @Getter
 @Entity
