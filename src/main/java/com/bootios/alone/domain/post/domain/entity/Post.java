@@ -27,7 +27,7 @@ public class Post extends BaseEntity {
   private User creator;
 
   @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "location_id", nullable = false)
+  @JoinColumn(name = "location_id", nullable = true)
   private Location location;
 
   @Column(name = "title", nullable = false)
