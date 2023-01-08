@@ -11,13 +11,12 @@ import com.bootios.alone.domain.post.exception.OnlyCreatorUpdatePostException;
 import com.bootios.alone.domain.user.User;
 import com.bootios.alone.domain.user.exception.NotFoundUserEntityException;
 import com.bootios.alone.domain.user.repository.UserRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -98,19 +97,21 @@ public class PostService {
   }
 
   private PostInfoList mapPostEntityToPostInfoList(Page<Post> postPage) {
-    List<PostInfo> postInfos = postPage.stream().map(this::mapPostEntityToPostInfo).collect(Collectors.toList());
+    List<PostInfo> postInfos =
+        postPage.stream().map(this::mapPostEntityToPostInfo).collect(Collectors.toList());
     return new PostInfoList(postInfos);
   }
+
   public PostInfoList getPostListByPagination(int page, int size) {
     PageRequest pageRequest = PageRequest.of(page, size);
     Page<Post> postListByPagination = postRepository.findPostWithPagination(pageRequest);
     return mapPostEntityToPostInfoList(postListByPagination);
-
   }
 
   public PostInfoList searchPostListWithTitleByPagination(int page, int size, String keyword) {
     PageRequest pageRequest = PageRequest.of(page, size);
-    Page<Post> postListByPagination = postRepository.findContainingTitlePostWithPagination(pageRequest,keyword);
+    Page<Post> postListByPagination =
+        postRepository.findContainingTitlePostWithPagination(pageRequest, keyword);
 
     return mapPostEntityToPostInfoList(postListByPagination);
   }

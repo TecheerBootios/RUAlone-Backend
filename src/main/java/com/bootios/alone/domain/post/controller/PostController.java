@@ -7,11 +7,10 @@ import com.bootios.alone.domain.post.dto.PostUpdateRequest;
 import com.bootios.alone.domain.post.service.PostService;
 import com.bootios.alone.global.result.ResultCode;
 import com.bootios.alone.global.result.ResultResponse;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RestController
@@ -55,9 +54,12 @@ public class PostController {
 
   @GetMapping("/api/post/search")
   public ResponseEntity<ResultResponse> getPostListByPagination(
-          @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "") String keyword) {
-    PostInfoList postDetailList = postService.searchPostListWithTitleByPagination(page, size, keyword);
+      @RequestParam(defaultValue = "0") int page,
+      @RequestParam(defaultValue = "10") int size,
+      @RequestParam(defaultValue = "") String keyword) {
+    PostInfoList postDetailList =
+        postService.searchPostListWithTitleByPagination(page, size, keyword);
     return ResponseEntity.ok(
-            ResultResponse.of(ResultCode.SEARCH_POST_BY_TITLE_PAGINATION_SUCCESS, postDetailList));
+        ResultResponse.of(ResultCode.SEARCH_POST_BY_TITLE_PAGINATION_SUCCESS, postDetailList));
   }
 }

@@ -1,13 +1,12 @@
 package com.bootios.alone.domain.post.domain.repository;
 
 import com.bootios.alone.domain.post.domain.entity.Post;
+import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
-import java.util.Optional;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 
@@ -18,5 +17,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
   Page<Post> findPostWithPagination(Pageable pageable);
 
   @Query("select p from Post p where p.isActive is true and p.title like %:keyword%")
-  Page<Post> findContainingTitlePostWithPagination(Pageable pageable, @Param("keyword")String keyword);
+  Page<Post> findContainingTitlePostWithPagination(
+      Pageable pageable, @Param("keyword") String keyword);
 }
