@@ -17,7 +17,10 @@ public enum ResultCode {
 
   DELETE_POST_SUCCESS("P003", "POST 삭제 성공"),
 
-  GET_ONE_POST_SUCCESS("P004", "POST 단일 조회 성공");
+  GET_ONE_POST_SUCCESS("P004", "POST 단일 조회 성공"),
+  GET_POST_PAGINATION_SUCCESS("P005", "POST PAGINATION 조회 성공"),
+  SEARCH_POST_BY_TITLE_PAGINATION_SUCCESS("P006", "POST 제목으로 목록 조회 성공"),
+  ;
 
   private final String code;
   private final String message;

@@ -26,11 +26,14 @@ public class Post extends BaseEntity {
   private User creator;
 
   @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "location_id", nullable = false)
+  @JoinColumn(name = "location_id", nullable = true)
   private Location location;
 
   @Column(name = "title", nullable = false)
   private String title;
+
+  @Column(name = "chat_url", nullable = false)
+  private String chatUrl;
 
   @Column(name = "start_at", nullable = false)
   private LocalDateTime startAt;
@@ -47,12 +50,14 @@ public class Post extends BaseEntity {
       User creator,
       Location location,
       String title,
+      String chatUrl,
       LocalDateTime startAt,
       Integer limitMember,
       FoodCategory foodCategory) {
     this.creator = creator;
     this.location = location;
     this.title = title;
+    this.chatUrl = chatUrl;
     this.startAt = startAt;
     this.limitMember = limitMember;
     this.foodCategory = foodCategory;

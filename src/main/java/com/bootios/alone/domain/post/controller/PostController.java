@@ -2,6 +2,7 @@ package com.bootios.alone.domain.post.controller;
 
 import com.bootios.alone.domain.post.dto.PostCreateRequest;
 import com.bootios.alone.domain.post.dto.PostInfo;
+import com.bootios.alone.domain.post.dto.PostInfoList;
 import com.bootios.alone.domain.post.dto.PostUpdateRequest;
 import com.bootios.alone.domain.post.service.PostService;
 import com.bootios.alone.global.result.ResultCode;
@@ -41,5 +42,24 @@ public class PostController {
   public ResponseEntity<ResultResponse> getPost(@PathVariable Long id) {
     PostInfo postDetail = postService.getPostDetail(id);
     return ResponseEntity.ok(ResultResponse.of(ResultCode.GET_ONE_POST_SUCCESS, postDetail));
+  }
+
+  @GetMapping("/api/post/list")
+  public ResponseEntity<ResultResponse> getPostListByPagination(
+      @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+    PostInfoList postDetailList = postService.getPostListByPagination(page, size);
+    return ResponseEntity.ok(
+        ResultResponse.of(ResultCode.GET_POST_PAGINATION_SUCCESS, postDetailList));
+  }
+
+  @GetMapping("/api/post/search")
+  public ResponseEntity<ResultResponse> getPostListByPagination(
+      @RequestParam(defaultValue = "0") int page,
+      @RequestParam(defaultValue = "10") int size,
+      @RequestParam(defaultValue = "") String keyword) {
+    PostInfoList postDetailList =
+        postService.searchPostListWithTitleByPagination(page, size, keyword);
+    return ResponseEntity.ok(
+        ResultResponse.of(ResultCode.SEARCH_POST_BY_TITLE_PAGINATION_SUCCESS, postDetailList));
   }
 }
