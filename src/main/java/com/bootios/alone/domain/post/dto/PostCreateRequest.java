@@ -21,6 +21,9 @@ public class PostCreateRequest {
   @NotBlank(message = "제목은 빈칸일 수 없습니다")
   private final String title;
 
+  @NotBlank(message = "채팅 URL은 빈칸일 수 없습니다")
+  private final String chatUrl;
+
   @Future(message = "날짜는 미래만 고를 수 있습니다.")
   private final LocalDateTime startAt;
 
