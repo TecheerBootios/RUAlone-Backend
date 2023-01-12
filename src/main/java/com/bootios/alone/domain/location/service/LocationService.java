@@ -10,19 +10,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class LocationService {
 
-    public final LocationRepository locationRepository;
+  public final LocationRepository locationRepository;
 
-    public void registerLocation(LocationCreateRequest locationCreateRequest) {
+  public void registerLocation(LocationCreateRequest locationCreateRequest) {
 
-        Location location = createRequestToEntity(locationCreateRequest);
+    Location location = createRequestToEntity(locationCreateRequest);
 
-        locationRepository.save(location);
-    }
+    locationRepository.save(location);
+  }
 
-    public Location createRequestToEntity(LocationCreateRequest locationCreateRequest) {
-        return Location.builder()
-                .xCoordinate(locationCreateRequest.getXxCoordinate())
-                .yCoordinate(locationCreateRequest.getYyCoordinate())
-                .build();
-    }
+  public Location createRequestToEntity(LocationCreateRequest locationCreateRequest) {
+    return Location.builder()
+        .xCoordinate(locationCreateRequest.getXxCoordinate())
+        .yCoordinate(locationCreateRequest.getYyCoordinate())
+        .build();
+  }
 }

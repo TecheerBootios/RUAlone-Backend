@@ -21,7 +21,7 @@ public enum ResultCode {
   GET_POST_PAGINATION_SUCCESS("P005", "POST PAGINATION 조회 성공"),
   SEARCH_POST_BY_TITLE_PAGINATION_SUCCESS("P006", "POST 제목으로 목록 조회 성공"),
 
-  //location
+  // location
   CREATE_LOCATION_SUCCESS("L001", "LOCATION 생성 성공");
 
   private final String code;
