@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
-@Api(tags = "4. OAuth 2.0 Kakao")
+@Api(tags = "2. OAuth 2.0 Kakao")
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/oauth/kakao")
+@RequestMapping("api/oauth/kakao")
 public class KOAuthController {
 
   private final RestTemplate restTemplate;
