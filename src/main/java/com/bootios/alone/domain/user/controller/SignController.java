@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = {"1. SignUp/LogIn"})
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/api")
 public class SignController {
 
   private final JwtProvider jwtProvider;
