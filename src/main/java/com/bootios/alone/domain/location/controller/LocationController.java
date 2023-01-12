@@ -4,10 +4,9 @@ import com.bootios.alone.domain.location.dto.LocationCreateRequest;
 import com.bootios.alone.domain.location.service.LocationService;
 import com.bootios.alone.global.result.ResultCode;
 import com.bootios.alone.global.result.ResultResponse;
-import javax.validation.Valid;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
