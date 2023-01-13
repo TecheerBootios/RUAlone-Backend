@@ -13,10 +13,10 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags = {"1. User"})
+@Api(tags = {"3. User"})
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/api")
 public class UserController {
 
   private final UserService userService;
