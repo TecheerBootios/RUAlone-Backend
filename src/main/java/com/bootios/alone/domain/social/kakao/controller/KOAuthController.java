@@ -23,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("api/oauth/kakao")
+@RequestMapping("/api/oauth/kakao")
 public class KOAuthController {
 
   private final RestTemplate restTemplate;
