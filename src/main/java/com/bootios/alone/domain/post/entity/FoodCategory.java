@@ -1,4 +1,4 @@
-package com.bootios.alone.domain.post.domain.entity;
+package com.bootios.alone.domain.post.entity;
 
 public enum FoodCategory {
   한식,

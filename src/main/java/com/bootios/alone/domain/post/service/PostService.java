@@ -1,7 +1,7 @@
 package com.bootios.alone.domain.post.service;
 
-import com.bootios.alone.domain.post.domain.entity.Post;
-import com.bootios.alone.domain.post.domain.repository.PostRepository;
+import com.bootios.alone.domain.post.entity.Post;
+import com.bootios.alone.domain.post.repository.PostRepository;
 import com.bootios.alone.domain.post.dto.PostCreateRequest;
 import com.bootios.alone.domain.post.dto.PostInfo;
 import com.bootios.alone.domain.post.dto.PostInfoList;

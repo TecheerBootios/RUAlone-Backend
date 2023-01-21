@@ -1,6 +1,6 @@
-package com.bootios.alone.domain.location.domain.entity;
+package com.bootios.alone.domain.location.entity;
 
-import com.bootios.alone.domain.post.domain.entity.Post;
+import com.bootios.alone.domain.post.entity.Post;
 import com.bootios.alone.global.common.BaseEntity;
 import javax.persistence.*;
 import lombok.AccessLevel;
