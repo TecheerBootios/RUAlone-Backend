@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -25,6 +26,7 @@ public class PostService {
   private final UserRepository userRepository;
   private final PostRepository postRepository;
 
+  @Transactional
   public PostInfo createPost(PostCreateRequest postCreateRequest) {
     Long creatorId = postCreateRequest.getCreatorId();
     User foundCreator =
@@ -36,6 +38,7 @@ public class PostService {
     return mapPostEntityToPostInfo(savedPost);
   }
 
+  @Transactional
   public PostInfo updatePost(PostUpdateRequest postUpdateRequest) {
     User foundCreator =
         userRepository
@@ -67,6 +70,7 @@ public class PostService {
     postRepository.save(foundPost);
   }
 
+  @Transactional
   public PostInfo getPostDetail(Long id) {
 
     Post foundPost = postRepository.findPostById(id).orElseThrow(NotFoundPostEntityException::new);

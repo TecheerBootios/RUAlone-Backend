@@ -25,7 +25,8 @@ public class Location extends BaseEntity {
   @Column(nullable = false)
   private Float yCoordinate;
 
-  @OneToOne(mappedBy = "location")
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "post_id", nullable = false)
   private Post post;
 
   @Builder
