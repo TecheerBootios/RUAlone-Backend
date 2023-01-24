@@ -3,7 +3,6 @@ package com.bootios.alone.domain.post.entity;
 import com.bootios.alone.domain.post.dto.PostUpdateRequest;
 import com.bootios.alone.domain.user.entity.User;
 import com.bootios.alone.global.common.BaseEntity;
-import java.time.LocalDateTime;
 import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
