@@ -9,6 +9,6 @@ import lombok.*;
 @Getter
 public class LocationCreateRequest {
 
-  @NotNull private Float xxCoordinate;
-  @NotNull private Float yyCoordinate;
+  @NotNull private Float latitude;
+  @NotNull private Float longitude;
 }

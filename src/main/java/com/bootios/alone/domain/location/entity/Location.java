@@ -20,18 +20,19 @@ public class Location extends BaseEntity {
   private Long id;
 
   @Column(nullable = false)
-  private Float xCoordinate;
+  private float latitude;
 
   @Column(nullable = false)
-  private Float yCoordinate;
+  private float longitude;
 
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "post_id", nullable = false)
   private Post post;
 
   @Builder
-  public Location(Float xCoordinate, Float yCoordinate) {
-    this.xCoordinate = xCoordinate;
-    this.yCoordinate = yCoordinate;
+  public Location(Float latitude, Float longitude, Post post) {
+    this.post = post;
+    this.latitude = latitude;
+    this.longitude = longitude;
   }
 }
