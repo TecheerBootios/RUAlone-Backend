@@ -9,6 +9,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -30,7 +33,7 @@ public class Post extends BaseEntity {
   private String chatUrl;
 
   @Column(name = "start_at", nullable = false)
-  private String startAt;
+  private LocalDateTime startAt;
 
   @Column(name = "limit_member", nullable = false)
   private Integer limitMember;
@@ -41,12 +44,12 @@ public class Post extends BaseEntity {
 
   @Builder
   public Post(
-      User creator,
-      String title,
-      String chatUrl,
-      String startAt,
-      Integer limitMember,
-      FoodCategory foodCategory) {
+          User creator,
+          String title,
+          String chatUrl,
+          LocalDateTime startAt,
+          Integer limitMember,
+          FoodCategory foodCategory) {
     this.creator = creator;
     this.title = title;
     this.chatUrl = chatUrl;

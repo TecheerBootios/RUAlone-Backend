@@ -8,8 +8,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-@Builder
+import java.time.LocalDateTime;
+import java.util.Date;
+
+
 @Getter
+@Builder
 @AllArgsConstructor
 public class PostCreateRequest {
 
@@ -22,11 +26,19 @@ public class PostCreateRequest {
   @NotBlank(message = "채팅 URL은 빈칸일 수 없습니다")
   private final String chatUrl;
 
-  private final String startAt;
+  private final LocalDateTime startAt;
 
   @Min(value = 2, message = "혼밥하실 수 없습니다.")
   private final Integer limitMember;
 
   @NotNull(message = "카테고리는 공백이 될 수 없습니다.")
   private final FoodCategory foodCategory;
+
+  @Min(value = 0, message = "위도는 0이하가 될 수 없습니다.")
+  @NotNull(message = "위도는 공백이 될 수 없습니다.")
+  private final float latitude;
+
+  @Min(value = 0, message = "경도는 0이하가 될 수 없습니다.")
+  @NotNull(message = "경도는 공백이 될 수 없습니다.")
+  private final float longitude;
 }

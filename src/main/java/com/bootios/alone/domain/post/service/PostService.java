@@ -1,5 +1,7 @@
 package com.bootios.alone.domain.post.service;
 
+import com.bootios.alone.domain.location.entity.Location;
+import com.bootios.alone.domain.location.repository.LocationRepository;
 import com.bootios.alone.domain.post.dto.PostCreateRequest;
 import com.bootios.alone.domain.post.dto.PostInfo;
 import com.bootios.alone.domain.post.dto.PostUpdateRequest;
@@ -10,19 +12,25 @@ import com.bootios.alone.domain.post.repository.PostRepository;
 import com.bootios.alone.domain.user.entity.User;
 import com.bootios.alone.domain.user.exception.CUserNotFoundException;
 import com.bootios.alone.domain.user.repository.UserRepository;
+
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class PostService {
 
   private final UserRepository userRepository;
   private final PostRepository postRepository;
+  private final LocationRepository locationRepository;
 
   @Transactional
   public PostInfo createPost(PostCreateRequest postCreateRequest) {
@@ -33,7 +41,19 @@ public class PostService {
     Post newPost = mapCreateRequestToEntity(postCreateRequest, foundCreator);
 
     Post savedPost = postRepository.save(newPost);
+
+    Location location = mapCreateRequestToLocation(postCreateRequest, savedPost);
+    locationRepository.save(location);
+
     return mapPostEntityToPostInfo(savedPost);
+  }
+
+  public Location mapCreateRequestToLocation(PostCreateRequest postCreateRequest, Post savedPost) {
+    return Location.builder()
+            .latitude(postCreateRequest.getLatitude())
+            .longitude(postCreateRequest.getLongitude())
+            .post(savedPost)
+            .build();
   }
 
   @Transactional
@@ -60,7 +80,7 @@ public class PostService {
     return mapPostEntityToPostInfo(savedPost);
   }
 
-  //  @Transactional
+  @Transactional
   public void deletePost(Long id) {
 
     Post foundPost = postRepository.findPostById(id).orElseThrow(CNotFoundPostEntityException::new);

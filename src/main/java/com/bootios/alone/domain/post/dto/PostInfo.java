@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Builder
 @Getter
 @AllArgsConstructor
@@ -14,7 +16,7 @@ public class PostInfo {
 
   private String chatUrl;
   private String creatorName;
-  private String startAt;
+  private LocalDateTime startAt;
   private Integer limitMember;
   private FoodCategory foodCategory;
 }
