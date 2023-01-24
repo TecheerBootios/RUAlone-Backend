@@ -15,8 +15,7 @@ public class PostInfo {
 
   private String chatUrl;
   private String creatorName;
-  private LocalDateTime startAt;
+  private String startAt;
   private Integer limitMember;
   private FoodCategory foodCategory;
-  private LocalDateTime createdAt;
 }

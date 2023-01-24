@@ -110,7 +110,6 @@ public class PostService {
         .startAt(post.getStartAt())
         .limitMember(post.getLimitMember())
         .foodCategory(post.getFoodCategory())
-        .createdAt(post.getCreatedAt())
         .build();
   }
 }
