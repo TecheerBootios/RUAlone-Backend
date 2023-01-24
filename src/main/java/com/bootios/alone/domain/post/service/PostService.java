@@ -12,8 +12,6 @@ import com.bootios.alone.domain.post.repository.PostRepository;
 import com.bootios.alone.domain.user.entity.User;
 import com.bootios.alone.domain.user.exception.CUserNotFoundException;
 import com.bootios.alone.domain.user.repository.UserRepository;
-
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -50,10 +48,10 @@ public class PostService {
 
   public Location mapCreateRequestToLocation(PostCreateRequest postCreateRequest, Post savedPost) {
     return Location.builder()
-            .latitude(postCreateRequest.getLatitude())
-            .longitude(postCreateRequest.getLongitude())
-            .post(savedPost)
-            .build();
+        .latitude(postCreateRequest.getLatitude())
+        .longitude(postCreateRequest.getLongitude())
+        .post(savedPost)
+        .build();
   }
 
   @Transactional

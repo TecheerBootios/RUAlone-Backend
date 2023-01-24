@@ -3,14 +3,12 @@ package com.bootios.alone.domain.post.entity;
 import com.bootios.alone.domain.post.dto.PostUpdateRequest;
 import com.bootios.alone.domain.user.entity.User;
 import com.bootios.alone.global.common.BaseEntity;
+import java.time.LocalDateTime;
 import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Entity
@@ -44,12 +42,12 @@ public class Post extends BaseEntity {
 
   @Builder
   public Post(
-          User creator,
-          String title,
-          String chatUrl,
-          LocalDateTime startAt,
-          Integer limitMember,
-          FoodCategory foodCategory) {
+      User creator,
+      String title,
+      String chatUrl,
+      LocalDateTime startAt,
+      Integer limitMember,
+      FoodCategory foodCategory) {
     this.creator = creator;
     this.title = title;
     this.chatUrl = chatUrl;
