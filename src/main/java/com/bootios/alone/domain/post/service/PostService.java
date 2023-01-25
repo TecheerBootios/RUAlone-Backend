@@ -1,5 +1,6 @@
 package com.bootios.alone.domain.post.service;
 
+import com.bootios.alone.domain.location.dto.LocationInfo;
 import com.bootios.alone.domain.location.entity.Location;
 import com.bootios.alone.domain.location.repository.LocationRepository;
 import com.bootios.alone.domain.post.dto.PostCreateRequest;
@@ -20,6 +21,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityNotFoundException;
 
 @RequiredArgsConstructor
 @Service
@@ -46,7 +49,7 @@ public class PostService {
     return mapPostEntityToPostInfo(savedPost);
   }
 
-  public Location mapCreateRequestToLocation(PostCreateRequest postCreateRequest, Post savedPost) {
+  private Location mapCreateRequestToLocation(PostCreateRequest postCreateRequest, Post savedPost) {
     return Location.builder()
         .latitude(postCreateRequest.getLatitude())
         .longitude(postCreateRequest.getLongitude())
@@ -93,21 +96,6 @@ public class PostService {
     return mapPostEntityToPostInfo(foundPost);
   }
 
-  @Transactional(readOnly = true)
-  public List<PostInfo> getPostListByPagination(int page, int size) {
-    PageRequest pageRequest = PageRequest.of(page, size);
-    return postRepository.findPostWithPagination(pageRequest).stream()
-        .map(this::mapPostEntityToPostInfo)
-        .collect(Collectors.toList());
-  }
-
-  @Transactional(readOnly = true)
-  public List<PostInfo> searchPostListWithTitleByPagination(int page, int size, String keyword) {
-    PageRequest pageRequest = PageRequest.of(page, size);
-    return postRepository.findContainingTitlePostWithPagination(pageRequest, keyword).stream()
-        .map(this::mapPostEntityToPostInfo)
-        .collect(Collectors.toList());
-  }
 
   private Post mapCreateRequestToEntity(PostCreateRequest postCreateRequest, User foundCreator) {
     return Post.builder()
@@ -121,6 +109,8 @@ public class PostService {
   }
 
   private PostInfo mapPostEntityToPostInfo(Post post) {
+    LocationInfo locationInfo = mapLocationInfoToPostEntity(post);
+
     return PostInfo.builder()
         .title(post.getTitle())
         .creatorName(post.getCreator().getNickName())
@@ -128,6 +118,39 @@ public class PostService {
         .startAt(post.getStartAt())
         .limitMember(post.getLimitMember())
         .foodCategory(post.getFoodCategory())
+        .locationInfo(locationInfo)
         .build();
   }
+
+
+  private LocationInfo mapLocationInfoToPostEntity(Post post) {
+    Location locationByPost = locationRepository.findLocationByPostId(post.getId())
+            .orElseThrow(EntityNotFoundException::new);
+
+    return LocationInfo.builder()
+            .latitude(locationByPost.getLatitude())
+            .longitude(locationByPost.getLongitude())
+            .build();
+  }
+
+  private PostInfoList mapPostEntityToPostInfoList(Page<Post> postPage) {
+    List<PostInfo> postInfos =
+        postPage.stream().map(this::mapPostEntityToPostInfo).collect(Collectors.toList());
+    return new PostInfoList(postInfos);
+  }
+
+  public PostInfoList getPostListByPagination(int page, int size) {
+    PageRequest pageRequest = PageRequest.of(page, size);
+    Page<Post> postListByPagination = postRepository.findPostWithPagination(pageRequest);
+    return mapPostEntityToPostInfoList(postListByPagination);
+  }
+
+  public PostInfoList searchPostListWithTitleByPagination(int page, int size, String keyword) {
+    PageRequest pageRequest = PageRequest.of(page, size);
+    Page<Post> postListByPagination =
+        postRepository.findContainingTitlePostWithPagination(pageRequest, keyword);
+
+    return mapPostEntityToPostInfoList(postListByPagination);
+  }
+
 }

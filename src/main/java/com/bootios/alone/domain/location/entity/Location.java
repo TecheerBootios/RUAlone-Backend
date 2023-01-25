@@ -20,10 +20,10 @@ public class Location extends BaseEntity {
   private Long id;
 
   @Column(nullable = false)
-  private float latitude;
+  private Float latitude;
 
   @Column(nullable = false)
-  private float longitude;
+  private Float longitude;
 
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "post_id", nullable = false)
