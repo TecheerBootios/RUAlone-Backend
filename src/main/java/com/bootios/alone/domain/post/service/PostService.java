@@ -15,14 +15,13 @@ import com.bootios.alone.domain.user.exception.CUserNotFoundException;
 import com.bootios.alone.domain.user.repository.UserRepository;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityNotFoundException;
 
 @RequiredArgsConstructor
 @Service
@@ -124,13 +123,15 @@ public class PostService {
 
 
   private LocationInfo mapLocationInfoToPostEntity(Post post) {
-    Location locationByPost = locationRepository.findLocationByPostId(post.getId())
+    Location locationByPost =
+        locationRepository
+            .findLocationByPostId(post.getId())
             .orElseThrow(EntityNotFoundException::new);
 
     return LocationInfo.builder()
-            .latitude(locationByPost.getLatitude())
-            .longitude(locationByPost.getLongitude())
-            .build();
+        .latitude(locationByPost.getLatitude())
+        .longitude(locationByPost.getLongitude())
+        .build();
   }
 
   private PostInfoList mapPostEntityToPostInfoList(Page<Post> postPage) {
