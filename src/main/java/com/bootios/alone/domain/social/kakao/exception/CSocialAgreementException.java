@@ -1,4 +1,4 @@
-package com.bootios.alone.global.advice.exception;
+package com.bootios.alone.domain.social.kakao.exception;
 
 public class CSocialAgreementException extends RuntimeException {
   public CSocialAgreementException() {

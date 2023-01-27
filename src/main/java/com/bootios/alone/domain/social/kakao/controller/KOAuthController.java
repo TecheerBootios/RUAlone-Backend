@@ -1,7 +1,7 @@
 package com.bootios.alone.domain.social.kakao.controller;
 
 import com.bootios.alone.domain.social.kakao.service.KakaoService;
-import com.bootios.alone.global.advice.exception.CCommunicationException;
+import com.bootios.alone.domain.social.kakao.exception.CCommunicationException;
 import com.bootios.alone.global.response.model.CommonResult;
 import com.bootios.alone.global.response.service.ResponseService;
 import io.swagger.annotations.Api;

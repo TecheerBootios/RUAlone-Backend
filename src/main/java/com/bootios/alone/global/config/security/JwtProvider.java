@@ -1,7 +1,7 @@
 package com.bootios.alone.global.config.security;
 
 import com.bootios.alone.domain.security.dto.TokenDto;
-import com.bootios.alone.global.advice.exception.CAuthenticationEntryPointException;
+import com.bootios.alone.domain.security.exception.CAuthenticationEntryPointException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.impl.Base64UrlCodec;
 import java.nio.charset.StandardCharsets;

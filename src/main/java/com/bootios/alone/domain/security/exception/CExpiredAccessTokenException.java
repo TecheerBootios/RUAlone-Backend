@@ -1,4 +1,4 @@
-package com.bootios.alone.global.advice.exception;
+package com.bootios.alone.domain.security.exception;
 
 public class CExpiredAccessTokenException extends RuntimeException {
   public CExpiredAccessTokenException() {

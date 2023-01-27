@@ -5,11 +5,11 @@ import com.bootios.alone.domain.post.dto.PostInfo;
 import com.bootios.alone.domain.post.dto.PostInfoList;
 import com.bootios.alone.domain.post.dto.PostUpdateRequest;
 import com.bootios.alone.domain.post.entity.Post;
-import com.bootios.alone.domain.post.exception.NotFoundPostEntityException;
-import com.bootios.alone.domain.post.exception.OnlyCreatorUpdatePostException;
+import com.bootios.alone.domain.post.exception.CNotFoundPostEntityException;
+import com.bootios.alone.domain.post.exception.COnlyCreatorUpdatePostException;
 import com.bootios.alone.domain.post.repository.PostRepository;
 import com.bootios.alone.domain.user.entity.User;
-import com.bootios.alone.domain.user.exception.NotFoundUserEntityException;
+import com.bootios.alone.domain.user.exception.CUserNotFoundException;
 import com.bootios.alone.domain.user.repository.UserRepository;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +30,7 @@ public class PostService {
   public PostInfo createPost(PostCreateRequest postCreateRequest) {
     Long creatorId = postCreateRequest.getCreatorId();
     User foundCreator =
-        userRepository.findUserById(creatorId).orElseThrow(NotFoundUserEntityException::new);
+        userRepository.findUserById(creatorId).orElseThrow(CUserNotFoundException::new);
 
     Post newPost = mapCreateRequestToEntity(postCreateRequest, foundCreator);
 
@@ -43,17 +43,17 @@ public class PostService {
     User foundCreator =
         userRepository
             .findUserById(postUpdateRequest.getCreatorId())
-            .orElseThrow(NotFoundUserEntityException::new);
+            .orElseThrow(CUserNotFoundException::new);
 
     Post foundPost =
         postRepository
             .findPostById(postUpdateRequest.getPostId())
-            .orElseThrow(NotFoundPostEntityException::new);
+            .orElseThrow(CNotFoundPostEntityException::new);
     //    NotFoundPostEntityException::new
     // == throw new NotFoundPostEntityException();
 
     if (!foundPost.getCreator().equals(foundCreator)) {
-      throw new OnlyCreatorUpdatePostException();
+      throw new COnlyCreatorUpdatePostException();
     }
 
     foundPost.update(postUpdateRequest);
@@ -65,7 +65,7 @@ public class PostService {
   //  @Transactional
   public void deletePost(Long id) {
 
-    Post foundPost = postRepository.findPostById(id).orElseThrow(NotFoundPostEntityException::new);
+    Post foundPost = postRepository.findPostById(id).orElseThrow(CNotFoundPostEntityException::new);
     foundPost.deletePost();
     postRepository.save(foundPost);
   }
@@ -73,7 +73,7 @@ public class PostService {
   @Transactional
   public PostInfo getPostDetail(Long id) {
 
-    Post foundPost = postRepository.findPostById(id).orElseThrow(NotFoundPostEntityException::new);
+    Post foundPost = postRepository.findPostById(id).orElseThrow(CNotFoundPostEntityException::new);
     return mapPostEntityToPostInfo(foundPost);
   }
 

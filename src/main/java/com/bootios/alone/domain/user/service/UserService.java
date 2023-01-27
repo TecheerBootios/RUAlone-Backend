@@ -4,7 +4,7 @@ import com.bootios.alone.domain.user.dto.request.UserRequestDto;
 import com.bootios.alone.domain.user.dto.response.UserResponseDto;
 import com.bootios.alone.domain.user.entity.User;
 import com.bootios.alone.domain.user.repository.UserRepository;
-import com.bootios.alone.global.advice.exception.CUserNotFoundException;
+import com.bootios.alone.domain.user.exception.CUserNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
