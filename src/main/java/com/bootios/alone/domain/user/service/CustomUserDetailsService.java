@@ -1,7 +1,7 @@
 package com.bootios.alone.domain.user.service;
 
-import com.bootios.alone.domain.user.repository.UserRepository;
 import com.bootios.alone.domain.user.exception.CUserNotFoundException;
+import com.bootios.alone.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
