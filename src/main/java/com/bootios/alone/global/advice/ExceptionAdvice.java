@@ -32,8 +32,6 @@ public class ExceptionAdvice {
   private final ResponseService responseService;
   private final MessageSource messageSource;
 
-
-
   /***
    * -9999
    * default Exception
@@ -167,10 +165,9 @@ public class ExceptionAdvice {
   @ExceptionHandler(CNotFoundPostEntityException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   protected CommonResult notFoundPostEntityException(
-          HttpServletRequest request, CNotFoundPostEntityException e) {
+      HttpServletRequest request, CNotFoundPostEntityException e) {
     return responseService.getFailResult(
-            Integer.parseInt(getMessage("postNotFound.code")),
-            getMessage("postNotFound.msg"));
+        Integer.parseInt(getMessage("postNotFound.code")), getMessage("postNotFound.msg"));
   }
 
   /***
@@ -180,10 +177,10 @@ public class ExceptionAdvice {
   @ExceptionHandler(COnlyCreatorUpdatePostException.class)
   @ResponseStatus(HttpStatus.FORBIDDEN)
   protected CommonResult onlyCreatorUpdatePostException(
-          HttpServletRequest request, COnlyCreatorUpdatePostException e) {
+      HttpServletRequest request, COnlyCreatorUpdatePostException e) {
     return responseService.getFailResult(
-            Integer.parseInt(getMessage("onlyCreatorUpdatePostException.code")),
-            getMessage("onlyCreatorUpdatePostException.msg"));
+        Integer.parseInt(getMessage("onlyCreatorUpdatePostException.code")),
+        getMessage("onlyCreatorUpdatePostException.msg"));
   }
 
   private String getMessage(String code) {
