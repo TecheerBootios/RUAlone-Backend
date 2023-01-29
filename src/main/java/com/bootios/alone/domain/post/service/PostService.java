@@ -78,19 +78,17 @@ public class PostService {
   @Transactional(readOnly = true)
   public List<PostInfo> getPostListByPagination(int page, int size) {
     PageRequest pageRequest = PageRequest.of(page, size);
-    return postRepository.findPostWithPagination(pageRequest)
-            .stream()
-            .map(this::mapPostEntityToPostInfo)
-            .collect(Collectors.toList());
+    return postRepository.findPostWithPagination(pageRequest).stream()
+        .map(this::mapPostEntityToPostInfo)
+        .collect(Collectors.toList());
   }
 
   @Transactional(readOnly = true)
   public List<PostInfo> searchPostListWithTitleByPagination(int page, int size, String keyword) {
     PageRequest pageRequest = PageRequest.of(page, size);
-    return postRepository.findContainingTitlePostWithPagination(pageRequest, keyword)
-            .stream()
-            .map(this::mapPostEntityToPostInfo)
-            .collect(Collectors.toList());
+    return postRepository.findContainingTitlePostWithPagination(pageRequest, keyword).stream()
+        .map(this::mapPostEntityToPostInfo)
+        .collect(Collectors.toList());
   }
 
   private Post mapCreateRequestToEntity(PostCreateRequest postCreateRequest, User foundCreator) {
