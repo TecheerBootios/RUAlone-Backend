@@ -2,7 +2,6 @@ package com.bootios.alone.domain.post.service;
 
 import com.bootios.alone.domain.post.dto.PostCreateRequest;
 import com.bootios.alone.domain.post.dto.PostInfo;
-import com.bootios.alone.domain.post.dto.PostInfoList;
 import com.bootios.alone.domain.post.dto.PostUpdateRequest;
 import com.bootios.alone.domain.post.entity.Post;
 import com.bootios.alone.domain.post.exception.CNotFoundPostEntityException;
@@ -14,7 +13,6 @@ import com.bootios.alone.domain.user.repository.UserRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -70,11 +68,29 @@ public class PostService {
     postRepository.save(foundPost);
   }
 
-  @Transactional
+  @Transactional(readOnly = true)
   public PostInfo getPostDetail(Long id) {
 
     Post foundPost = postRepository.findPostById(id).orElseThrow(CNotFoundPostEntityException::new);
     return mapPostEntityToPostInfo(foundPost);
+  }
+
+  @Transactional(readOnly = true)
+  public List<PostInfo> getPostListByPagination(int page, int size) {
+    PageRequest pageRequest = PageRequest.of(page, size);
+    return postRepository.findPostWithPagination(pageRequest)
+            .stream()
+            .map(this::mapPostEntityToPostInfo)
+            .collect(Collectors.toList());
+  }
+
+  @Transactional(readOnly = true)
+  public List<PostInfo> searchPostListWithTitleByPagination(int page, int size, String keyword) {
+    PageRequest pageRequest = PageRequest.of(page, size);
+    return postRepository.findContainingTitlePostWithPagination(pageRequest, keyword)
+            .stream()
+            .map(this::mapPostEntityToPostInfo)
+            .collect(Collectors.toList());
   }
 
   private Post mapCreateRequestToEntity(PostCreateRequest postCreateRequest, User foundCreator) {
@@ -98,25 +114,5 @@ public class PostService {
         .foodCategory(post.getFoodCategory())
         .createdAt(post.getCreatedAt())
         .build();
-  }
-
-  private PostInfoList mapPostEntityToPostInfoList(Page<Post> postPage) {
-    List<PostInfo> postInfos =
-        postPage.stream().map(this::mapPostEntityToPostInfo).collect(Collectors.toList());
-    return new PostInfoList(postInfos);
-  }
-
-  public PostInfoList getPostListByPagination(int page, int size) {
-    PageRequest pageRequest = PageRequest.of(page, size);
-    Page<Post> postListByPagination = postRepository.findPostWithPagination(pageRequest);
-    return mapPostEntityToPostInfoList(postListByPagination);
-  }
-
-  public PostInfoList searchPostListWithTitleByPagination(int page, int size, String keyword) {
-    PageRequest pageRequest = PageRequest.of(page, size);
-    Page<Post> postListByPagination =
-        postRepository.findContainingTitlePostWithPagination(pageRequest, keyword);
-
-    return mapPostEntityToPostInfoList(postListByPagination);
   }
 }
