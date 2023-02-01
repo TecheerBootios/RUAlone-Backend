@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
 import lombok.Getter;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.CreatedDate;
@@ -24,8 +25,13 @@ public abstract class BaseEntity {
   @Column(name = "updated_at")
   private LocalDateTime updatedAt;
 
-  @Column(name = "is_active", columnDefinition = "tinyint(1) default 1", nullable = false)
-  private Boolean isActive = true;
+  @Column(name = "is_active", nullable = false)
+  private Boolean isActive;
+
+  @PrePersist
+  public void prePersist() {
+    this.isActive = this.isActive == null ? true : this.isActive;
+  }
 
   protected void delete() {
     this.isActive = false;

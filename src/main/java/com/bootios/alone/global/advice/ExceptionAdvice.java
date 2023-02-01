@@ -1,6 +1,17 @@
 package com.bootios.alone.global.advice;
 
-import com.bootios.alone.global.advice.exception.*;
+import com.bootios.alone.domain.post.exception.CNotFoundPostEntityException;
+import com.bootios.alone.domain.post.exception.COnlyCreatorUpdatePostException;
+import com.bootios.alone.domain.security.exception.CAccessDeniedException;
+import com.bootios.alone.domain.security.exception.CAuthenticationEntryPointException;
+import com.bootios.alone.domain.security.exception.CExpiredAccessTokenException;
+import com.bootios.alone.domain.security.exception.CRefreshTokenException;
+import com.bootios.alone.domain.social.kakao.exception.CCommunicationException;
+import com.bootios.alone.domain.social.kakao.exception.CSocialAgreementException;
+import com.bootios.alone.domain.user.exception.CEmailLoginFailedException;
+import com.bootios.alone.domain.user.exception.CEmailSignupFailedException;
+import com.bootios.alone.domain.user.exception.CUserExistException;
+import com.bootios.alone.domain.user.exception.CUserNotFoundException;
 import com.bootios.alone.global.response.model.CommonResult;
 import com.bootios.alone.global.response.service.ResponseService;
 import javax.servlet.http.HttpServletRequest;
@@ -145,6 +156,31 @@ public class ExceptionAdvice {
     return responseService.getFailResult(
         Integer.parseInt(getMessage("agreementException.code")),
         getMessage("agreementException.msg"));
+  }
+
+  /***
+   * P001
+   * 게시글을 찾지 못했을 때 발생시키는 예외
+   */
+  @ExceptionHandler(CNotFoundPostEntityException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  protected CommonResult notFoundPostEntityException(
+      HttpServletRequest request, CNotFoundPostEntityException e) {
+    return responseService.getFailResult(
+        Integer.parseInt(getMessage("postNotFound.code")), getMessage("postNotFound.msg"));
+  }
+
+  /***
+   * P002
+   * 게시자가 아닌 사람이 게시글을 삭제하려할 때 발생시키는 예외
+   */
+  @ExceptionHandler(COnlyCreatorUpdatePostException.class)
+  @ResponseStatus(HttpStatus.FORBIDDEN)
+  protected CommonResult onlyCreatorUpdatePostException(
+      HttpServletRequest request, COnlyCreatorUpdatePostException e) {
+    return responseService.getFailResult(
+        Integer.parseInt(getMessage("onlyCreatorUpdatePostException.code")),
+        getMessage("onlyCreatorUpdatePostException.msg"));
   }
 
   private String getMessage(String code) {

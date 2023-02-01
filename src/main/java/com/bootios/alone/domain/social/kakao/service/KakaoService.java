@@ -2,7 +2,7 @@ package com.bootios.alone.domain.social.kakao.service;
 
 import com.bootios.alone.domain.social.kakao.dto.KakaoProfile;
 import com.bootios.alone.domain.social.kakao.dto.RetKakaoOAuth;
-import com.bootios.alone.global.advice.exception.CCommunicationException;
+import com.bootios.alone.domain.social.kakao.exception.CCommunicationException;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

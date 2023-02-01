@@ -1,22 +1,21 @@
 package com.bootios.alone.domain.post.service;
 
-import com.bootios.alone.domain.post.domain.entity.Post;
-import com.bootios.alone.domain.post.domain.repository.PostRepository;
 import com.bootios.alone.domain.post.dto.PostCreateRequest;
 import com.bootios.alone.domain.post.dto.PostInfo;
-import com.bootios.alone.domain.post.dto.PostInfoList;
 import com.bootios.alone.domain.post.dto.PostUpdateRequest;
-import com.bootios.alone.domain.post.exception.NotFoundPostEntityException;
-import com.bootios.alone.domain.post.exception.OnlyCreatorUpdatePostException;
+import com.bootios.alone.domain.post.entity.Post;
+import com.bootios.alone.domain.post.exception.CNotFoundPostEntityException;
+import com.bootios.alone.domain.post.exception.COnlyCreatorUpdatePostException;
+import com.bootios.alone.domain.post.repository.PostRepository;
 import com.bootios.alone.domain.user.entity.User;
-import com.bootios.alone.domain.user.exception.NotFoundUserEntityException;
+import com.bootios.alone.domain.user.exception.CUserNotFoundException;
 import com.bootios.alone.domain.user.repository.UserRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -25,10 +24,11 @@ public class PostService {
   private final UserRepository userRepository;
   private final PostRepository postRepository;
 
+  @Transactional
   public PostInfo createPost(PostCreateRequest postCreateRequest) {
     Long creatorId = postCreateRequest.getCreatorId();
     User foundCreator =
-        userRepository.findUserById(creatorId).orElseThrow(NotFoundUserEntityException::new);
+        userRepository.findUserById(creatorId).orElseThrow(CUserNotFoundException::new);
 
     Post newPost = mapCreateRequestToEntity(postCreateRequest, foundCreator);
 
@@ -36,21 +36,22 @@ public class PostService {
     return mapPostEntityToPostInfo(savedPost);
   }
 
+  @Transactional
   public PostInfo updatePost(PostUpdateRequest postUpdateRequest) {
     User foundCreator =
         userRepository
             .findUserById(postUpdateRequest.getCreatorId())
-            .orElseThrow(NotFoundUserEntityException::new);
+            .orElseThrow(CUserNotFoundException::new);
 
     Post foundPost =
         postRepository
             .findPostById(postUpdateRequest.getPostId())
-            .orElseThrow(NotFoundPostEntityException::new);
+            .orElseThrow(CNotFoundPostEntityException::new);
     //    NotFoundPostEntityException::new
     // == throw new NotFoundPostEntityException();
 
     if (!foundPost.getCreator().equals(foundCreator)) {
-      throw new OnlyCreatorUpdatePostException();
+      throw new COnlyCreatorUpdatePostException();
     }
 
     foundPost.update(postUpdateRequest);
@@ -62,15 +63,32 @@ public class PostService {
   //  @Transactional
   public void deletePost(Long id) {
 
-    Post foundPost = postRepository.findPostById(id).orElseThrow(NotFoundPostEntityException::new);
+    Post foundPost = postRepository.findPostById(id).orElseThrow(CNotFoundPostEntityException::new);
     foundPost.deletePost();
     postRepository.save(foundPost);
   }
 
+  @Transactional(readOnly = true)
   public PostInfo getPostDetail(Long id) {
 
-    Post foundPost = postRepository.findPostById(id).orElseThrow(NotFoundPostEntityException::new);
+    Post foundPost = postRepository.findPostById(id).orElseThrow(CNotFoundPostEntityException::new);
     return mapPostEntityToPostInfo(foundPost);
+  }
+
+  @Transactional(readOnly = true)
+  public List<PostInfo> getPostListByPagination(int page, int size) {
+    PageRequest pageRequest = PageRequest.of(page, size);
+    return postRepository.findPostWithPagination(pageRequest).stream()
+        .map(this::mapPostEntityToPostInfo)
+        .collect(Collectors.toList());
+  }
+
+  @Transactional(readOnly = true)
+  public List<PostInfo> searchPostListWithTitleByPagination(int page, int size, String keyword) {
+    PageRequest pageRequest = PageRequest.of(page, size);
+    return postRepository.findContainingTitlePostWithPagination(pageRequest, keyword).stream()
+        .map(this::mapPostEntityToPostInfo)
+        .collect(Collectors.toList());
   }
 
   private Post mapCreateRequestToEntity(PostCreateRequest postCreateRequest, User foundCreator) {
@@ -94,25 +112,5 @@ public class PostService {
         .foodCategory(post.getFoodCategory())
         .createdAt(post.getCreatedAt())
         .build();
-  }
-
-  private PostInfoList mapPostEntityToPostInfoList(Page<Post> postPage) {
-    List<PostInfo> postInfos =
-        postPage.stream().map(this::mapPostEntityToPostInfo).collect(Collectors.toList());
-    return new PostInfoList(postInfos);
-  }
-
-  public PostInfoList getPostListByPagination(int page, int size) {
-    PageRequest pageRequest = PageRequest.of(page, size);
-    Page<Post> postListByPagination = postRepository.findPostWithPagination(pageRequest);
-    return mapPostEntityToPostInfoList(postListByPagination);
-  }
-
-  public PostInfoList searchPostListWithTitleByPagination(int page, int size, String keyword) {
-    PageRequest pageRequest = PageRequest.of(page, size);
-    Page<Post> postListByPagination =
-        postRepository.findContainingTitlePostWithPagination(pageRequest, keyword);
-
-    return mapPostEntityToPostInfoList(postListByPagination);
   }
 }

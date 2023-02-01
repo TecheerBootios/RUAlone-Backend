@@ -1,4 +1,4 @@
-package com.bootios.alone.global.advice.exception;
+package com.bootios.alone.domain.user.exception;
 
 public class CUserExistException extends RuntimeException {
   public CUserExistException() {

@@ -1,6 +1,6 @@
 package com.bootios.alone.domain.post.dto;
 
-import com.bootios.alone.domain.post.domain.entity.FoodCategory;
+import com.bootios.alone.domain.post.entity.FoodCategory;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

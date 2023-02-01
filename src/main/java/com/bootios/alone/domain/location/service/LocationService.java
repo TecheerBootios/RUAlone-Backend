@@ -1,8 +1,8 @@
 package com.bootios.alone.domain.location.service;
 
-import com.bootios.alone.domain.location.domain.entity.Location;
-import com.bootios.alone.domain.location.domain.repository.LocationRepository;
 import com.bootios.alone.domain.location.dto.LocationCreateRequest;
+import com.bootios.alone.domain.location.entity.Location;
+import com.bootios.alone.domain.location.repository.LocationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

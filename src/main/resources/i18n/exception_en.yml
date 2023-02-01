@@ -32,3 +32,9 @@ userExistException:
 agreementException:
   code: "-1009"
   msg: "A consent is required for the required consent item."
+postNotFound:
+  code: "P001"
+  msg: "This post is not exist."
+onlyCreatorUpdatePostException:
+  code: "P002"
+  msg: "Only creator can update their post."
