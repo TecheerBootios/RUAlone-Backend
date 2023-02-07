@@ -26,7 +26,9 @@ public class LocationService {
 
   @Transactional
   public LocationInfo updateLocation(LocationUpdateRequest locationUpdateRequest) {
-    Location foundLocation = locationRepository.findById(locationUpdateRequest.getLocationId())
+    Location foundLocation =
+        locationRepository
+            .findById(locationUpdateRequest.getLocationId())
             .orElseThrow(EntityNotFoundException::new);
 
     foundLocation.update(locationUpdateRequest);
@@ -36,13 +38,13 @@ public class LocationService {
   }
 
   public LocationInfo mapLocationEntityToLocationInfo(Location location) {
-    Location foundLocation = locationRepository.findById(location.getId())
-            .orElseThrow(EntityNotFoundException::new);
+    Location foundLocation =
+        locationRepository.findById(location.getId()).orElseThrow(EntityNotFoundException::new);
 
     return LocationInfo.builder()
-            .latitude(foundLocation.getLatitude())
-            .longitude(foundLocation.getLongitude())
-            .build();
+        .latitude(foundLocation.getLatitude())
+        .longitude(foundLocation.getLongitude())
+        .build();
   }
 
   public Location mapCreateRequestToEntity(LocationCreateRequest locationCreateRequest) {
@@ -51,5 +53,4 @@ public class LocationService {
         .longitude(locationCreateRequest.getLongitude())
         .build();
   }
-
 }

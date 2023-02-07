@@ -1,7 +1,6 @@
 package com.bootios.alone.domain.location.entity;
 
 import com.bootios.alone.domain.location.dto.LocationUpdateRequest;
-import com.bootios.alone.domain.post.dto.PostUpdateRequest;
 import com.bootios.alone.domain.post.entity.Post;
 import com.bootios.alone.global.common.BaseEntity;
 import javax.persistence.*;
@@ -42,5 +41,4 @@ public class Location extends BaseEntity {
     this.latitude = locationUpdateRequest.getLatitude();
     this.longitude = locationUpdateRequest.getLongitude();
   }
-
 }

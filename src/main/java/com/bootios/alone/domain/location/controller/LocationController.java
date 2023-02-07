@@ -24,12 +24,12 @@ public class LocationController {
   private final ResponseService responseService;
 
   @ApiImplicitParams({
-          @ApiImplicitParam(
-                  name = "X-AUTH-TOKEN",
-                  value = "로그인 성공 후 AccessToken",
-                  required = true,
-                  dataType = "String",
-                  paramType = "header")
+    @ApiImplicitParam(
+        name = "X-AUTH-TOKEN",
+        value = "로그인 성공 후 AccessToken",
+        required = true,
+        dataType = "String",
+        paramType = "header")
   })
   @ApiOperation(value = "좌표 등록", notes = "좌표값을 등록합니다.")
   @PostMapping("/api/location")
@@ -42,17 +42,17 @@ public class LocationController {
   }
 
   @ApiImplicitParams({
-          @ApiImplicitParam(
-                  name = "X-AUTH-TOKEN",
-                  value = "로그인 성공 후 AccessToken",
-                  required = true,
-                  dataType = "String",
-                  paramType = "header")
+    @ApiImplicitParam(
+        name = "X-AUTH-TOKEN",
+        value = "로그인 성공 후 AccessToken",
+        required = true,
+        dataType = "String",
+        paramType = "header")
   })
   @ApiOperation(value = "좌표 변경", notes = "좌표값을 변경합니다.")
   @PutMapping("/api/location")
   public ResponseEntity<CommonResult> updateLocation(
-          @Valid @RequestBody LocationUpdateRequest locationUpdateRequest) {
+      @Valid @RequestBody LocationUpdateRequest locationUpdateRequest) {
 
     locationService.updateLocation(locationUpdateRequest);
 
