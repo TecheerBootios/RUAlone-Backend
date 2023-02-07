@@ -95,7 +95,6 @@ public class PostService {
     return mapPostEntityToPostInfo(foundPost);
   }
 
-
   private Post mapCreateRequestToEntity(PostCreateRequest postCreateRequest, User foundCreator) {
     return Post.builder()
         .title(postCreateRequest.getTitle())
@@ -120,7 +119,6 @@ public class PostService {
         .locationInfo(locationInfo)
         .build();
   }
-
 
   private LocationInfo mapLocationInfoToPostEntity(Post post) {
     Location locationByPost =
@@ -153,5 +151,4 @@ public class PostService {
 
     return mapPostEntityToPostInfoList(postListByPagination);
   }
-
 }
