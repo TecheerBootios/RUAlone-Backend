@@ -5,6 +5,7 @@ import com.bootios.alone.domain.location.entity.Location;
 import com.bootios.alone.domain.location.repository.LocationRepository;
 import com.bootios.alone.domain.post.dto.PostCreateRequest;
 import com.bootios.alone.domain.post.dto.PostInfo;
+import com.bootios.alone.domain.post.dto.PostInfoList;
 import com.bootios.alone.domain.post.dto.PostUpdateRequest;
 import com.bootios.alone.domain.post.entity.Post;
 import com.bootios.alone.domain.post.exception.CNotFoundPostEntityException;
@@ -132,23 +133,19 @@ public class PostService {
         .build();
   }
 
-  private PostInfoList mapPostEntityToPostInfoList(Page<Post> postPage) {
-    List<PostInfo> postInfos =
-        postPage.stream().map(this::mapPostEntityToPostInfo).collect(Collectors.toList());
-    return new PostInfoList(postInfos);
+  @Transactional(readOnly = true)
+  public List<PostInfo> getPostListByPagination(int page, int size) {
+    PageRequest pageRequest = PageRequest.of(page, size);
+    return postRepository.findPostWithPagination(pageRequest).stream()
+            .map(this::mapPostEntityToPostInfo)
+            .collect(Collectors.toList());
   }
 
-  public PostInfoList getPostListByPagination(int page, int size) {
+  @Transactional(readOnly = true)
+  public List<PostInfo> searchPostListWithTitleByPagination(int page, int size, String keyword) {
     PageRequest pageRequest = PageRequest.of(page, size);
-    Page<Post> postListByPagination = postRepository.findPostWithPagination(pageRequest);
-    return mapPostEntityToPostInfoList(postListByPagination);
-  }
-
-  public PostInfoList searchPostListWithTitleByPagination(int page, int size, String keyword) {
-    PageRequest pageRequest = PageRequest.of(page, size);
-    Page<Post> postListByPagination =
-        postRepository.findContainingTitlePostWithPagination(pageRequest, keyword);
-
-    return mapPostEntityToPostInfoList(postListByPagination);
+    return postRepository.findContainingTitlePostWithPagination(pageRequest, keyword).stream()
+            .map(this::mapPostEntityToPostInfo)
+            .collect(Collectors.toList());
   }
 }

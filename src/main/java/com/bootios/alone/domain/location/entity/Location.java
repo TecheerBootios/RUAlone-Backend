@@ -35,4 +35,8 @@ public class Location extends BaseEntity {
     this.latitude = latitude;
     this.longitude = longitude;
   }
+
+  public void deleteLocation() {
+    this.delete();
+  }
 }

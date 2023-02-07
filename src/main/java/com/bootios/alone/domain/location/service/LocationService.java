@@ -6,6 +6,7 @@ import com.bootios.alone.domain.location.repository.LocationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import javax.persistence.EntityNotFoundException;
 
 @RequiredArgsConstructor
 @Service
@@ -16,15 +17,22 @@ public class LocationService {
   @Transactional
   public void registerLocation(LocationCreateRequest locationCreateRequest) {
 
-    Location location = createRequestToEntity(locationCreateRequest);
+    Location location = mapCreateRequestToEntity(locationCreateRequest);
 
     locationRepository.save(location);
   }
 
-  public Location createRequestToEntity(LocationCreateRequest locationCreateRequest) {
+  public Location mapCreateRequestToEntity(LocationCreateRequest locationCreateRequest) {
     return Location.builder()
         .latitude(locationCreateRequest.getLatitude())
         .longitude(locationCreateRequest.getLongitude())
         .build();
+  }
+
+  public void deleteLocation(Long id) {
+    Location foundLocation = locationRepository.findById(id)
+            .orElseThrow(EntityNotFoundException::new);
+    foundLocation.deleteLocation();
+    locationRepository.save(foundLocation);
   }
 }
