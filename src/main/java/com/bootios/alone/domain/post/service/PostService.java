@@ -5,7 +5,6 @@ import com.bootios.alone.domain.location.entity.Location;
 import com.bootios.alone.domain.location.repository.LocationRepository;
 import com.bootios.alone.domain.post.dto.PostCreateRequest;
 import com.bootios.alone.domain.post.dto.PostInfo;
-import com.bootios.alone.domain.post.dto.PostInfoList;
 import com.bootios.alone.domain.post.dto.PostUpdateRequest;
 import com.bootios.alone.domain.post.entity.Post;
 import com.bootios.alone.domain.post.exception.CNotFoundPostEntityException;
@@ -19,7 +18,6 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -137,15 +135,15 @@ public class PostService {
   public List<PostInfo> getPostListByPagination(int page, int size) {
     PageRequest pageRequest = PageRequest.of(page, size);
     return postRepository.findPostWithPagination(pageRequest).stream()
-            .map(this::mapPostEntityToPostInfo)
-            .collect(Collectors.toList());
+        .map(this::mapPostEntityToPostInfo)
+        .collect(Collectors.toList());
   }
 
   @Transactional(readOnly = true)
   public List<PostInfo> searchPostListWithTitleByPagination(int page, int size, String keyword) {
     PageRequest pageRequest = PageRequest.of(page, size);
     return postRepository.findContainingTitlePostWithPagination(pageRequest, keyword).stream()
-            .map(this::mapPostEntityToPostInfo)
-            .collect(Collectors.toList());
+        .map(this::mapPostEntityToPostInfo)
+        .collect(Collectors.toList());
   }
 }

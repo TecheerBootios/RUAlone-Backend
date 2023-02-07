@@ -32,8 +32,7 @@ public class LocationController {
 
   @ApiOperation(value = "좌표 삭제", notes = "좌표값을 삭제합니다.")
   @PostMapping
-  public ResponseEntity<CommonResult> deleteLocation(
-          @Valid @RequestParam Long id) {
+  public ResponseEntity<CommonResult> deleteLocation(@Valid @RequestParam Long id) {
 
     locationService.deleteLocation(id);
 
