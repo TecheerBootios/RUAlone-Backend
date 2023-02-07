@@ -1,10 +1,13 @@
 package com.bootios.alone.domain.location.controller;
 
 import com.bootios.alone.domain.location.dto.LocationCreateRequest;
+import com.bootios.alone.domain.location.dto.LocationUpdateRequest;
 import com.bootios.alone.domain.location.service.LocationService;
 import com.bootios.alone.global.response.model.CommonResult;
 import com.bootios.alone.global.response.service.ResponseService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +23,16 @@ public class LocationController {
   private final LocationService locationService;
   private final ResponseService responseService;
 
+  @ApiImplicitParams({
+          @ApiImplicitParam(
+                  name = "X-AUTH-TOKEN",
+                  value = "로그인 성공 후 AccessToken",
+                  required = true,
+                  dataType = "String",
+                  paramType = "header")
+  })
   @ApiOperation(value = "좌표 등록", notes = "좌표값을 등록합니다.")
-  @PostMapping
+  @PostMapping("/api/location")
   public ResponseEntity<CommonResult> createLocation(
       @Valid @RequestBody LocationCreateRequest locationCreateRequest) {
 
@@ -30,11 +41,20 @@ public class LocationController {
     return ResponseEntity.ok(responseService.getSuccessResult());
   }
 
-  @ApiOperation(value = "좌표 삭제", notes = "좌표값을 삭제합니다.")
-  @PostMapping
-  public ResponseEntity<CommonResult> deleteLocation(@Valid @RequestParam Long id) {
+  @ApiImplicitParams({
+          @ApiImplicitParam(
+                  name = "X-AUTH-TOKEN",
+                  value = "로그인 성공 후 AccessToken",
+                  required = true,
+                  dataType = "String",
+                  paramType = "header")
+  })
+  @ApiOperation(value = "좌표 변경", notes = "좌표값을 변경합니다.")
+  @PutMapping("/api/location")
+  public ResponseEntity<CommonResult> updateLocation(
+          @Valid @RequestBody LocationUpdateRequest locationUpdateRequest) {
 
-    locationService.deleteLocation(id);
+    locationService.updateLocation(locationUpdateRequest);
 
     return ResponseEntity.ok(responseService.getSuccessResult());
   }

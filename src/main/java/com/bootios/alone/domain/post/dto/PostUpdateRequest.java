@@ -15,7 +15,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class PostUpdateRequest {
 
-  @NotNull(message = "수정할 postId는 공백이 올 수 없습니다.")
+  @NotNull(message = "postId는 공백이 올 수 없습니다.")
   private final Long postId;
 
   @NotNull(message = "userId는 공백이 올 수 없습니다.")
