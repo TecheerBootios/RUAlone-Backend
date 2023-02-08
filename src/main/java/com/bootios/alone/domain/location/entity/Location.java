@@ -1,5 +1,6 @@
 package com.bootios.alone.domain.location.entity;
 
+import com.bootios.alone.domain.location.dto.LocationUpdateRequest;
 import com.bootios.alone.domain.post.entity.Post;
 import com.bootios.alone.global.common.BaseEntity;
 import javax.persistence.*;
@@ -20,18 +21,24 @@ public class Location extends BaseEntity {
   private Long id;
 
   @Column(nullable = false)
-  private Float xCoordinate;
+  private Float latitude;
 
   @Column(nullable = false)
-  private Float yCoordinate;
+  private Float longitude;
 
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "post_id", nullable = false)
   private Post post;
 
   @Builder
-  public Location(Float xCoordinate, Float yCoordinate) {
-    this.xCoordinate = xCoordinate;
-    this.yCoordinate = yCoordinate;
+  public Location(Float latitude, Float longitude, Post post) {
+    this.post = post;
+    this.latitude = latitude;
+    this.longitude = longitude;
+  }
+
+  public void update(LocationUpdateRequest locationUpdateRequest) {
+    this.latitude = locationUpdateRequest.getLatitude();
+    this.longitude = locationUpdateRequest.getLongitude();
   }
 }

@@ -1,5 +1,8 @@
 package com.bootios.alone.domain.post.service;
 
+import com.bootios.alone.domain.location.dto.LocationInfo;
+import com.bootios.alone.domain.location.entity.Location;
+import com.bootios.alone.domain.location.repository.LocationRepository;
 import com.bootios.alone.domain.post.dto.PostCreateRequest;
 import com.bootios.alone.domain.post.dto.PostInfo;
 import com.bootios.alone.domain.post.dto.PostUpdateRequest;
@@ -12,17 +15,21 @@ import com.bootios.alone.domain.user.exception.CUserNotFoundException;
 import com.bootios.alone.domain.user.repository.UserRepository;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class PostService {
 
   private final UserRepository userRepository;
   private final PostRepository postRepository;
+  private final LocationRepository locationRepository;
 
   @Transactional
   public PostInfo createPost(PostCreateRequest postCreateRequest) {
@@ -33,7 +40,19 @@ public class PostService {
     Post newPost = mapCreateRequestToEntity(postCreateRequest, foundCreator);
 
     Post savedPost = postRepository.save(newPost);
+
+    Location location = mapCreateRequestToLocation(postCreateRequest, savedPost);
+    locationRepository.save(location);
+
     return mapPostEntityToPostInfo(savedPost);
+  }
+
+  private Location mapCreateRequestToLocation(PostCreateRequest postCreateRequest, Post savedPost) {
+    return Location.builder()
+        .latitude(postCreateRequest.getLatitude())
+        .longitude(postCreateRequest.getLongitude())
+        .post(savedPost)
+        .build();
   }
 
   @Transactional
@@ -60,7 +79,7 @@ public class PostService {
     return mapPostEntityToPostInfo(savedPost);
   }
 
-  //  @Transactional
+  @Transactional
   public void deletePost(Long id) {
 
     Post foundPost = postRepository.findPostById(id).orElseThrow(CNotFoundPostEntityException::new);
@@ -73,6 +92,43 @@ public class PostService {
 
     Post foundPost = postRepository.findPostById(id).orElseThrow(CNotFoundPostEntityException::new);
     return mapPostEntityToPostInfo(foundPost);
+  }
+
+  private Post mapCreateRequestToEntity(PostCreateRequest postCreateRequest, User foundCreator) {
+    return Post.builder()
+        .title(postCreateRequest.getTitle())
+        .chatUrl(postCreateRequest.getChatUrl())
+        .creator(foundCreator)
+        .startAt(postCreateRequest.getStartAt())
+        .limitMember(postCreateRequest.getLimitMember())
+        .foodCategory(postCreateRequest.getFoodCategory())
+        .build();
+  }
+
+  private PostInfo mapPostEntityToPostInfo(Post post) {
+    LocationInfo locationInfo = mapLocationInfoToPostEntity(post);
+
+    return PostInfo.builder()
+        .title(post.getTitle())
+        .creatorName(post.getCreator().getNickName())
+        .chatUrl(post.getChatUrl())
+        .startAt(post.getStartAt())
+        .limitMember(post.getLimitMember())
+        .foodCategory(post.getFoodCategory())
+        .locationInfo(locationInfo)
+        .build();
+  }
+
+  private LocationInfo mapLocationInfoToPostEntity(Post post) {
+    Location locationByPost =
+        locationRepository
+            .findLocationByPostId(post.getId())
+            .orElseThrow(EntityNotFoundException::new);
+
+    return LocationInfo.builder()
+        .latitude(locationByPost.getLatitude())
+        .longitude(locationByPost.getLongitude())
+        .build();
   }
 
   @Transactional(readOnly = true)
@@ -89,28 +145,5 @@ public class PostService {
     return postRepository.findContainingTitlePostWithPagination(pageRequest, keyword).stream()
         .map(this::mapPostEntityToPostInfo)
         .collect(Collectors.toList());
-  }
-
-  private Post mapCreateRequestToEntity(PostCreateRequest postCreateRequest, User foundCreator) {
-    return Post.builder()
-        .title(postCreateRequest.getTitle())
-        .chatUrl(postCreateRequest.getChatUrl())
-        .creator(foundCreator)
-        .startAt(postCreateRequest.getStartAt())
-        .limitMember(postCreateRequest.getLimitMember())
-        .foodCategory(postCreateRequest.getFoodCategory())
-        .build();
-  }
-
-  private PostInfo mapPostEntityToPostInfo(Post post) {
-    return PostInfo.builder()
-        .title(post.getTitle())
-        .creatorName(post.getCreator().getNickName())
-        .chatUrl(post.getChatUrl())
-        .startAt(post.getStartAt())
-        .limitMember(post.getLimitMember())
-        .foodCategory(post.getFoodCategory())
-        .createdAt(post.getCreatedAt())
-        .build();
   }
 }

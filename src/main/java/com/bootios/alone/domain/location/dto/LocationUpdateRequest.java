@@ -1,13 +1,17 @@
 package com.bootios.alone.domain.location.dto;
 
 import javax.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 
 @Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public class LocationCreateRequest {
+@AllArgsConstructor
+public class LocationUpdateRequest {
+
+  @NotNull(message = "locationId는 공백이 올 수 없습니다.")
+  private Long locationId;
 
   @NotNull(message = "latitude는 공백이 올 수 없습니다.")
   private Float latitude;

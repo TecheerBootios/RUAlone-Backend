@@ -1,5 +1,6 @@
 package com.bootios.alone.domain.post.dto;
 
+import com.bootios.alone.domain.location.dto.LocationInfo;
 import com.bootios.alone.domain.post.entity.FoodCategory;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -18,5 +19,5 @@ public class PostInfo {
   private LocalDateTime startAt;
   private Integer limitMember;
   private FoodCategory foodCategory;
-  private LocalDateTime createdAt;
+  private LocationInfo locationInfo;
 }
