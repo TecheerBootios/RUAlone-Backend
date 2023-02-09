@@ -1,12 +1,11 @@
 package com.bootios.alone.domain.post.dto;
 
 import com.bootios.alone.domain.post.entity.FoodCategory;
+import com.bootios.alone.domain.post.entity.PostType;
 import java.time.LocalDateTime;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-import com.bootios.alone.domain.post.entity.PostType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
