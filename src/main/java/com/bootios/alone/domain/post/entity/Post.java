@@ -36,9 +36,16 @@ public class Post extends BaseEntity {
   @Column(name = "limit_member", nullable = false)
   private Integer limitMember;
 
+  @Column(name = "place", nullable = false)
+  private String place;
+
   @Column(name = "food_category", nullable = false)
   @Enumerated(EnumType.STRING)
   private FoodCategory foodCategory;
+
+  @Column(name = "post_type", nullable = false)
+  @Enumerated(EnumType.STRING)
+  private PostType postType;
 
   @Builder
   public Post(
@@ -47,13 +54,17 @@ public class Post extends BaseEntity {
       String chatUrl,
       LocalDateTime startAt,
       Integer limitMember,
-      FoodCategory foodCategory) {
+      String place,
+      FoodCategory foodCategory,
+      PostType postType) {
     this.creator = creator;
     this.title = title;
     this.chatUrl = chatUrl;
     this.startAt = startAt;
     this.limitMember = limitMember;
+    this.place = place;
     this.foodCategory = foodCategory;
+    this.postType = postType;
   }
 
   public void update(PostUpdateRequest postUpdateRequest) {
