@@ -101,7 +101,9 @@ public class PostService {
         .creator(foundCreator)
         .startAt(postCreateRequest.getStartAt())
         .limitMember(postCreateRequest.getLimitMember())
+        .place(postCreateRequest.getPlace())
         .foodCategory(postCreateRequest.getFoodCategory())
+        .postType(postCreateRequest.getPostType())
         .build();
   }
 
@@ -114,8 +116,10 @@ public class PostService {
         .chatUrl(post.getChatUrl())
         .startAt(post.getStartAt())
         .limitMember(post.getLimitMember())
+        .place(post.getPlace())
         .foodCategory(post.getFoodCategory())
         .locationInfo(locationInfo)
+        .postType(post.getPostType())
         .build();
   }
 
