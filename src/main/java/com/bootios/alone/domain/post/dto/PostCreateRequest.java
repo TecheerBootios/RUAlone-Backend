@@ -16,7 +16,7 @@ import lombok.Getter;
 public class PostCreateRequest {
 
   @NotNull(message = "userId는 공백이 올 수 없습니다.")
-  private final Long creatorId;
+  private final String creatorEmail;
 
   @NotBlank(message = "제목은 빈칸일 수 없습니다")
   private final String title;
