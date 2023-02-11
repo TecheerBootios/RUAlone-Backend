@@ -35,7 +35,7 @@ public class PostService {
   public PostInfo createPost(PostCreateRequest postCreateRequest) {
     String creatorEmail = postCreateRequest.getCreatorEmail();
     User foundCreator =
-        userRepository.findByUserEmail(creatorEmail).orElseThrow(CUserNotFoundException::new);
+        userRepository.findByEmail(creatorEmail).orElseThrow(CUserNotFoundException::new);
 
     Post newPost = mapCreateRequestToEntity(postCreateRequest, foundCreator);
 
