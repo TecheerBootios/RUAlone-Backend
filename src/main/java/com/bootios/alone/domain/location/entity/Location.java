@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class Location extends BaseEntity {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "location_id")
   private Long id;
 
