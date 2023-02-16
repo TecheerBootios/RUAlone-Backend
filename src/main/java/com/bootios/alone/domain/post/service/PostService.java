@@ -49,8 +49,8 @@ public class PostService {
 
   private Location mapCreateRequestToLocation(PostCreateRequest postCreateRequest, Post savedPost) {
     return Location.builder()
-        .latitude(postCreateRequest.getLatitude())
-        .longitude(postCreateRequest.getLongitude())
+        .latitude(postCreateRequest.getLocation().getLatitude())
+        .longitude(postCreateRequest.getLocation().getLongitude())
         .post(savedPost)
         .build();
   }
