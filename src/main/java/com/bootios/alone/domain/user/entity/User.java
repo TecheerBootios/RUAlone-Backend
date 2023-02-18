@@ -20,7 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user")
+@Table(name = "users")
 public class User extends BaseEntity implements UserDetails {
 
   @Id
