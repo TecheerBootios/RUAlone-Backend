@@ -10,6 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RequiredArgsConstructor
 @Service
 public class LocationService {
@@ -22,6 +25,14 @@ public class LocationService {
     Location location = mapCreateRequestToEntity(locationCreateRequest);
 
     locationRepository.save(location);
+  }
+
+  @Transactional
+  public List<LocationInfo> getLocationInDistance(Float userLatitude, Float userLongitude) {
+    return locationRepository.findAll(userLatitude, userLongitude)
+            .stream()
+            .map(this::mapLocationEntityToLocationInfo)
+            .collect(Collectors.toList());
   }
 
   @Transactional

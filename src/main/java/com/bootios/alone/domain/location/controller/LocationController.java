@@ -1,9 +1,11 @@
 package com.bootios.alone.domain.location.controller;
 
 import com.bootios.alone.domain.location.dto.LocationCreateRequest;
+import com.bootios.alone.domain.location.dto.LocationInfo;
 import com.bootios.alone.domain.location.dto.LocationUpdateRequest;
 import com.bootios.alone.domain.location.service.LocationService;
 import com.bootios.alone.global.response.model.CommonResult;
+import com.bootios.alone.global.response.model.ListResult;
 import com.bootios.alone.global.response.service.ResponseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -13,6 +15,8 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Api(tags = {"5. Location"})
 @RequestMapping("/api/location")
@@ -39,6 +43,21 @@ public class LocationController {
     locationService.registerLocation(locationCreateRequest);
 
     return ResponseEntity.ok(responseService.getSuccessResult());
+  }
+
+  @ApiImplicitParams({
+          @ApiImplicitParam(
+                  name = "X-AUTH-TOKEN",
+                  value = "로그인 성공 후 AccessToken",
+                  required = true,
+                  dataType = "String",
+                  paramType = "header")
+  })
+  @ApiOperation(value = "조건에 맞는 좌표 목록", notes = "조건에 맞는 좌표 목록을 검색합니다.")
+  @GetMapping("/distance")
+  public ResponseEntity<ListResult> getLocationListInDistance(@RequestParam Float userLatitude, @RequestParam Float userLongitude) {
+    List<LocationInfo> locationInfoList = locationService.getLocationInDistance(userLatitude, userLongitude);
+    return ResponseEntity.ok(responseService.getListResult(locationInfoList));
   }
 
   @ApiImplicitParams({
