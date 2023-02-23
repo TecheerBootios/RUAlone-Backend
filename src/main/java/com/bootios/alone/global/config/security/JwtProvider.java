@@ -39,7 +39,7 @@ public class JwtProvider {
   }
 
   // Jwt 생성
-  public TokenDto createTokenDto(Long userPk, List<String> roles) {
+  public TokenDto createTokenDto(Long userPk, List<String> roles, String userEmail) {
 
     // Claims 에 user 구분을 위한 User pk 및 authorities 목록 삽입
     Claims claims = Jwts.claims().setSubject(String.valueOf(userPk));
@@ -69,6 +69,7 @@ public class JwtProvider {
         .accessToken(accessToken)
         .refreshToken(refreshToken)
         .accessTokenExpireDate(accessTokenValidMillisecond)
+        .userEmail(userEmail)
         .build();
   }
 

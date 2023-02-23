@@ -12,4 +12,5 @@ public class TokenDto {
   private String accessToken;
   private String refreshToken;
   private Long accessTokenExpireDate;
+  private String userEmail; // 클라이언트 요청으로 추가
 }

@@ -84,7 +84,7 @@ public class SignController {
             .findByEmailAndProvider(kakaoProfile.getKakao_account().getEmail(), "kakao")
             .orElseThrow(CUserNotFoundException::new);
     return responseService.getSingleResult(
-        jwtProvider.createTokenDto(user.getUserId(), user.getRoles()));
+        jwtProvider.createTokenDto(user.getUserId(), user.getRoles(), user.getEmail()));
   }
 
   @ApiOperation(value = "소셜 회원가입 - kakao", notes = "카카오로 회원가입을 합니다.")
