@@ -44,7 +44,8 @@ public class SignService {
       throw new CEmailLoginFailedException();
 
     // AccessToken, RefreshToken 발급
-    TokenDto tokenDto = jwtProvider.createTokenDto(user.getUserId(), user.getRoles(), user.getEmail());
+    TokenDto tokenDto =
+        jwtProvider.createTokenDto(user.getUserId(), user.getRoles(), user.getEmail());
 
     // RefreshToken 저장
     RefreshToken refreshToken =
@@ -92,7 +93,8 @@ public class SignService {
       throw new CRefreshTokenException();
 
     // AccessToken, RefreshToken 토큰 재발급, 리프레쉬 토큰 저장
-    TokenDto newCreatedToken = jwtProvider.createTokenDto(user.getUserId(), user.getRoles(), user.getEmail());
+    TokenDto newCreatedToken =
+        jwtProvider.createTokenDto(user.getUserId(), user.getRoles(), user.getEmail());
     RefreshToken updateRefreshToken = refreshToken.updateToken(newCreatedToken.getRefreshToken());
     tokenJpaRepo.save(updateRefreshToken);
 
