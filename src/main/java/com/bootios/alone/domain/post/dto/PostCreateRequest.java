@@ -4,6 +4,7 @@ import com.bootios.alone.domain.location.dto.LocationCreateDto;
 import com.bootios.alone.domain.post.entity.FoodCategory;
 import com.bootios.alone.domain.post.entity.PostType;
 import java.time.LocalDateTime;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -27,7 +28,8 @@ public class PostCreateRequest {
 
   private final LocalDateTime startAt;
 
-  @Min(value = 2, message = "혼밥하실 수 없습니다.")
+  @Min(value = 1, message = "혼밥하실 수 없습니다.")
+  @Max(value = 5, message = "너무 많이 먹지 마세요.")
   private final Integer limitMember;
 
   @NotBlank(message = "만남 장소는은 빈칸일 수 없습니다")
