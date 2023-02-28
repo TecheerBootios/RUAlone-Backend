@@ -5,13 +5,12 @@ import com.bootios.alone.domain.location.dto.LocationInfo;
 import com.bootios.alone.domain.location.dto.LocationUpdateRequest;
 import com.bootios.alone.domain.location.entity.Location;
 import com.bootios.alone.domain.location.repository.LocationRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -29,10 +28,9 @@ public class LocationService {
 
   @Transactional
   public List<LocationInfo> getLocationInDistance(Float userLatitude, Float userLongitude) {
-    return locationRepository.findAll(userLatitude, userLongitude)
-            .stream()
-            .map(this::mapLocationEntityToLocationInfo)
-            .collect(Collectors.toList());
+    return locationRepository.findAll(userLatitude, userLongitude).stream()
+        .map(this::mapLocationEntityToLocationInfo)
+        .collect(Collectors.toList());
   }
 
   @Transactional
