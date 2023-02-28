@@ -3,7 +3,10 @@ services:
 
   postgresql:
     container_name: postgresql
-    image: bitnami/postgresql:latest
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    image: postgres:13.2
     expose:
       - "5432"
     tty: true
@@ -11,32 +14,37 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+    volumes:
+      - ./src:/docker-entrypoint-initdb.d/
+#      - database_volume:/var/lib/postgresql/data
     #    volumes:
     #      - ${POSTGRES_HOME_DIR}/data/:/var/lib/postgresql/data
     ports:
       - "5432:5432"
 
+
     networks:
       - rualone
 
-  rualone-backend:
-    container_name: rualone-backend
-    image: ${SPRING_BOOT_IMAGE}
-    ports:
-      - "8080:8080"
-    depends_on:
-      - postgresql
-    command:
-      [
-        "--character-set-server=utf8mb4",
-        "--collation-server=utf8mb4_unicode_ci",
-      ]
-
-    environment:
-      # volumes:   프론트랑 합친 후에 볼륨 설정 예정
-       SPRING.DATASOURCE.URL: jdbc:postgresql://postgresql:5432/rualone
-    networks:
-      - rualone
+#  rualone-backend:
+#    container_name: rualone-backend
+#    image: ${SPRING_BOOT_IMAGE}
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - postgresql
+#    command:
+#      [
+#        "--character-set-server=utf8mb4",
+#        "--collation-server=utf8mb4_unicode_ci",
+#      ]
+#
+#    environment:
+#      # volumes:   프론트랑 합친 후에 볼륨 설정 예정
+#       SPRING.DATASOURCE.URL: jdbc:postgresql://postgresql:5432/rualone
+#    networks:
+#      - rualone
 
 networks:
   rualone:
