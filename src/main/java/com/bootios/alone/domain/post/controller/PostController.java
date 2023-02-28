@@ -124,16 +124,17 @@ public class PostController {
   }
 
   @ApiImplicitParams({
-          @ApiImplicitParam(
-                  name = "X-AUTH-TOKEN",
-                  value = "로그인 성공 후 AccessToken",
-                  required = true,
-                  dataType = "String",
-                  paramType = "header")
+    @ApiImplicitParam(
+        name = "X-AUTH-TOKEN",
+        value = "로그인 성공 후 AccessToken",
+        required = true,
+        dataType = "String",
+        paramType = "header")
   })
   @ApiOperation(value = "반경 1.5km 내의 게시글 목록", notes = "반경 1.5km 내의 게시글 목록을 조회합니다.")
   @GetMapping("/api/post/list/distance")
-  public ResponseEntity<ListResult> getPostListInDistance(@RequestParam Float userLatitude, @RequestParam Float userLongitude) {
+  public ResponseEntity<ListResult> getPostListInDistance(
+      @RequestParam Float userLatitude, @RequestParam Float userLongitude) {
     List<PostInfo> postInfoList = postService.getPostInDistance(userLatitude, userLongitude);
     return ResponseEntity.ok(responseService.getListResult(postInfoList));
   }

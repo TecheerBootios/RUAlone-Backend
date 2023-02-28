@@ -153,9 +153,8 @@ public class PostService {
 
   @Transactional(readOnly = true)
   public List<PostInfo> getPostInDistance(Float userLatitude, Float userLongitude) {
-    return postRepository.findPostsByDistance(userLatitude, userLongitude)
-            .stream()
-            .map(this::mapPostEntityToPostInfo)
-            .collect(Collectors.toList());
+    return postRepository.findPostsByDistance(userLatitude, userLongitude).stream()
+        .map(this::mapPostEntityToPostInfo)
+        .collect(Collectors.toList());
   }
 }

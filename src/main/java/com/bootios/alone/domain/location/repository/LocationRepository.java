@@ -1,7 +1,6 @@
 package com.bootios.alone.domain.location.repository;
 
 import com.bootios.alone.domain.location.entity.Location;
-import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

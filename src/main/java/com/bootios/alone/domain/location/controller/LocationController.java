@@ -1,17 +1,14 @@
 package com.bootios.alone.domain.location.controller;
 
 import com.bootios.alone.domain.location.dto.LocationCreateRequest;
-import com.bootios.alone.domain.location.dto.LocationInfo;
 import com.bootios.alone.domain.location.dto.LocationUpdateRequest;
 import com.bootios.alone.domain.location.service.LocationService;
 import com.bootios.alone.global.response.model.CommonResult;
-import com.bootios.alone.global.response.model.ListResult;
 import com.bootios.alone.global.response.service.ResponseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -60,6 +57,4 @@ public class LocationController {
 
     return ResponseEntity.ok(responseService.getSuccessResult());
   }
-
-
 }
