@@ -26,12 +26,6 @@ public class LocationService {
     locationRepository.save(location);
   }
 
-  @Transactional
-  public List<LocationInfo> getLocationInDistance(Float userLatitude, Float userLongitude) {
-    return locationRepository.findAll(userLatitude, userLongitude).stream()
-        .map(this::mapLocationEntityToLocationInfo)
-        .collect(Collectors.toList());
-  }
 
   @Transactional
   public LocationInfo updateLocation(LocationUpdateRequest locationUpdateRequest) {

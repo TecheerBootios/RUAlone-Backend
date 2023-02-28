@@ -18,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Api(tags = {"5. Location"})
-@RequestMapping("/api/location")
 @RequiredArgsConstructor
 @RestController
 public class LocationController {
@@ -52,23 +51,6 @@ public class LocationController {
         dataType = "String",
         paramType = "header")
   })
-  @ApiOperation(value = "조건에 맞는 좌표 목록", notes = "조건에 맞는 좌표 목록을 검색합니다.")
-  @GetMapping("/distance")
-  public ResponseEntity<ListResult> getLocationListInDistance(
-      @RequestParam Float userLatitude, @RequestParam Float userLongitude) {
-    List<LocationInfo> locationInfoList =
-        locationService.getLocationInDistance(userLatitude, userLongitude);
-    return ResponseEntity.ok(responseService.getListResult(locationInfoList));
-  }
-
-  @ApiImplicitParams({
-    @ApiImplicitParam(
-        name = "X-AUTH-TOKEN",
-        value = "로그인 성공 후 AccessToken",
-        required = true,
-        dataType = "String",
-        paramType = "header")
-  })
   @ApiOperation(value = "좌표 변경", notes = "좌표값을 변경합니다.")
   @PutMapping("/api/location")
   public ResponseEntity<CommonResult> updateLocation(
@@ -78,4 +60,6 @@ public class LocationController {
 
     return ResponseEntity.ok(responseService.getSuccessResult());
   }
+
+
 }
