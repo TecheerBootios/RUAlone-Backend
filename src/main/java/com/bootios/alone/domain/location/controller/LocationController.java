@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Api(tags = {"5. Location"})
-@RequestMapping("/api/location")
 @RequiredArgsConstructor
 @RestController
 public class LocationController {
