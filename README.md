@@ -11,8 +11,9 @@
 - Spring Data Jpa
 - Spring Security
 - PostgreSql
+- PostGIS
 - Lombok
-- Spring Rest Docs
+- Swagger
 
 # Swagger
 <img src="https://user-images.githubusercontent.com/82080962/223615533-306d6a45-fd0a-4135-8f7b-ab1f21029bb7.png" width="500">
