@@ -6,6 +6,7 @@
 <img src="https://user-images.githubusercontent.com/82080962/223613735-0628fe21-7e4e-4bd0-8d21-0274dcc6531c.png" width="500">
 
 # Tech stack
+- Java 11
 - Gradle
 - Spring Boot
 - Spring Data Jpa
@@ -14,6 +15,7 @@
 - PostGIS
 - Lombok
 - Swagger
+- Docker
 
 # Swagger
 <img src="https://user-images.githubusercontent.com/82080962/223615533-306d6a45-fd0a-4135-8f7b-ab1f21029bb7.png" width="500">
