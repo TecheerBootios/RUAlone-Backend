@@ -1,6 +1,13 @@
+### 환경 변수 설정 파일 ###
 .env
+
+### gradle 설정 파일 ###
 gradle.properties
 
+### application-xxx.yml ###
+/src/main/resources/application-oauth.yml
+/src/main/resources/application-private.yml
+/src/main/resources/application-local.yml
 
 ########################################################################
 HELP.md

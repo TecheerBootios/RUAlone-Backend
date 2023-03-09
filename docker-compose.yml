@@ -1,33 +1,51 @@
 version: '3'
 services:
-  mysql:
-    image: mysql:8.0 # 사용할 이미지
-    restart: always
-    container_name: mysql # 컨테이너 이름 설정
-    ports:
-      - "3306:3306" # 접근 포트 설정 (컨테이너 외부:컨테이너 내부)  <- 컨테이너 내부는 무조건 3306
-    environment: # -e 옵션
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD} # MYSQL 패스워드 설정 옵션
-    #volumes:
-      #- /Users/Shared/data/mysql-test:/var/lib/mysql # -v 옵션 (다렉토리 마운트 설정)
 
-  backend:
-    container_name: rualone-backend
-    image: ${SPRING_BOOT_IMAGE}
-
-    ports:
-      - "8080:8080"
-    depends_on:
-      - mysql
-    command:
-      [
-        "--character-set-server=utf8mb4",
-        "--collation-server=utf8mb4_unicode_ci",
-      ]
-
+  postgresql:
+    container_name: postgresql
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    image: postgres:13.2
+    expose:
+      - "5432"
+    tty: true
     environment:
-      SPRING.DATASOURCE.URL: jdbc:mysql://mysql:3306/rualone?serverTimezone=Asia/Seoul
-  #    volumes:   프론트랑 합친 후에 볼륨 설정 예정
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+    volumes:
+      - ./src:/docker-entrypoint-initdb.d/
+#      - database_volume:/var/lib/postgresql/data
+    #    volumes:
+    #      - ${POSTGRES_HOME_DIR}/data/:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+
+    networks:
+      - rualone
+
+#  rualone-backend:
+#    container_name: rualone-backend
+#    image: ${SPRING_BOOT_IMAGE}
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - postgresql
+#    command:
+#      [
+#        "--character-set-server=utf8mb4",
+#        "--collation-server=utf8mb4_unicode_ci",
+#      ]
+#
+#    environment:
+#      # volumes:   프론트랑 합친 후에 볼륨 설정 예정
+#       SPRING.DATASOURCE.URL: jdbc:postgresql://postgresql:5432/rualone
+#    networks:
+#      - rualone
+
+networks:
+  rualone:
+    driver: bridge

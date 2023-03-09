@@ -27,7 +27,6 @@ jib {
 	}
 }
 
-
 group = 'com.bootios'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
@@ -43,12 +42,44 @@ repositories {
 }
 
 dependencies {
+	// spring boot data JPA 의존성
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	// spring boot validation 의존성
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	// spring boot web 의존성
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// API 문서 자동화 -> spring-doc 방식
+	//implementation 'org.springdoc:springdoc-openapi-ui:1.6.8'
+
+	// API 문서 자동화 -> spring-fox 방식
+	implementation 'io.springfox:springfox-swagger2:2.6.1'
+	implementation 'io.springfox:springfox-swagger-ui:2.6.1'
+
+	// 다국어 제공을 위한 i18n을 yml 파일로 적용하기 위한 의존성
+	implementation 'net.rakugakibox.util:yaml-resource-bundle:1.1'
+
+	// view template으로 freemarker 적용
+	implementation 'org.springframework.boot:spring-boot-starter-freemarker:2.5.4'
+
+	// spring security 의존성
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	// jwt 의존성
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+	// Json을 결과로 매핑하기 위한 의존성
+	implementation 'com.google.code.gson:gson:2.8.8'
+
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.h2database:h2'
-	runtimeOnly 'com.mysql:mysql-connector-j'
+	// runtimeOnly 'com.h2database:h2'
+//	runtimeOnly 'com.mysql:mysql-connector-j'
+	runtimeOnly 'org.postgresql:postgresql'
+	implementation 'org.hibernate:hibernate-spatial:5.6.11.Final'
+	implementation("org.locationtech.jts:jts-core:1.18.2")
+
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
@@ -57,8 +88,6 @@ tasks.named('test') {
 	useJUnitPlatform()
 	finalizedBy jacocoTestReport
 }
-
-
 
 jacoco {
 	toolVersion = "0.8.8" // 버전 명시

@@ -1,15 +1,15 @@
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/rualone?serverTimezone=Asia/Seoul
-    username: rualone
-    password: rualone!
-  jpa:
-    database: mysql
-    database-platform: org.hibernate.dialect.MySQL8Dialect
-    show-sql: true
-    hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-        format_sql: true
+  profiles:
+    include: local, private, oauth
+
+  freemarker: # view template으로 freemarker 적용
+    template-loader-path: classpath:/templates
+    suffix: .ftl
+
+  messages: # 메시지 다국화를 위한 추가 구문
+    basename: i18n/exception
+    encoding: UTF-8
+
+  mvc:  # swagger와 springboot 버전 차이로 인한 추가구문
+    pathmatch:
+      matching-strategy: ant_path_matcher
